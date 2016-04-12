@@ -7,4 +7,10 @@
     <string name="stop_record">Stop</string>
     <string name="play_song">Play</string>
     <string name="pause_song">Pause</string>
+    <string name="fx_effects_flanger_radio">FLANGER</string>
+    <string name="fx_effects_filter_radio">FILTER</string>
+    <string name="fx_effects_roll_radio">ROLL</string>
+    <string name="fx_effects_echo_radio">ECHO</string>
+    <string name="fx_effects_reverb_radio">REVERB</string>
+    <string name="save_button">Save</string>
 </resources>

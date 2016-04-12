@@ -27,9 +27,64 @@
         android:id="@+id/play_song_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/play_song"
-        android:layout_marginBottom="163dp"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/stop_record_button"
+        android:layout_centerHorizontal="true"
+        android:text="@string/play_song" />
+
+    <Button
+        android:id="@+id/save_with_effect_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save_button"
+        android:layout_below="@+id/fx_fader"
+        android:layout_centerHorizontal="true" />
+
+    <RadioGroup
+        android:id="@+id/fx_effects_radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radio_flanger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/fx_effects_flanger_radio" />
+
+        <RadioButton
+            android:id="@+id/radio_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fx_effects_filter_radio" />
+
+        <RadioButton
+            android:id="@+id/radio_roll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fx_effects_roll_radio" />
+
+        <RadioButton
+            android:id="@+id/radio_echo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fx_effects_echo_radio" />
+
+        <RadioButton
+            android:id="@+id/reverb_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fx_effects_reverb_radio"/>
+
+    </RadioGroup>
+
+    <SeekBar
+        android:id="@+id/fx_fader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fx_effects_radio_group"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
