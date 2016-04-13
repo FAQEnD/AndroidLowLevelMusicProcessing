@@ -2,16 +2,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "Superpowered/SuperpoweredFrequencyDomain.h"
-#include "Superpowered/SuperpoweredAndroidAudioIO.h"
-#include "Superpowered/SuperpoweredRecorder.h"
 #include "Superpowered/SuperpoweredSimple.h"
-#include "Superpowered/SuperpoweredAdvancedAudioPlayer.h"
+#include "Superpowered/SuperpoweredRecorder.h"
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_AndroidConfiguration.h>
-#include <android/log.h>
-#include <math.h>
 
-#include "FrequencyDomain.h"
+#include "LowLevelMusicProcessor.h"
+#include "Utils.h"
 
 static LowLevelMusicProcessor *lowLevelMusicProcessor;
 
@@ -21,9 +18,6 @@ static LowLevelMusicProcessor *lowLevelMusicProcessor;
 SuperpoweredAndroidAudioIO *LowLevelMusicProcessor::sAudioInput;
 SuperpoweredAndroidAudioIO *LowLevelMusicProcessor::sAudioOutput;
 SuperpoweredAdvancedAudioPlayer *LowLevelMusicProcessor::sPlayer;
-
-const char *LowLevelMusicProcessor::sSavePath = "/storage/emulated/0/Music/saved_record.wav";
-const char *song = "/storage/emulated/0/Music/System Of A Down-Toxicity.mp3";
 
 char *LowLevelMusicProcessor::sLastRecordedFileName;
 float *LowLevelMusicProcessor::sStereoBuffer;
@@ -37,28 +31,28 @@ SuperpoweredReverb *LowLevelMusicProcessor::sReverb;
 
 bool LowLevelMusicProcessor::recordAudioProcessing(void *clientdata, short int *audioInput,
                                   int numberOfSamples, int samplerate) {
+
     fwrite(audioInput, sizeof(short int), numberOfSamples * CHANNELS_NUMBER, sFile);
     fflush(sFile);
+
     return true;
 }
 
 bool LowLevelMusicProcessor::outputAudioProcessing(void *clientdata, short int *audioOutput,
-                           int numberOfSamples,
-                           int samplerate) {
+                                                   int numberOfSamples,
+                                                   int samplerate) {
     if (sPlayer->process(sStereoBuffer, false, numberOfSamples)) {
-        sRoll->process(sStereoBuffer, sStereoBuffer, numberOfSamples);
-        sFilter->process(sStereoBuffer, sStereoBuffer, numberOfSamples);
-        sFlanger->process(sStereoBuffer, sStereoBuffer, numberOfSamples);
-        sEcho->process(sStereoBuffer, sStereoBuffer, numberOfSamples);
-        sReverb->process(sStereoBuffer, sStereoBuffer, numberOfSamples);
+
+        processAllFX(numberOfSamples);
 
         SuperpoweredFloatToShortInt(sStereoBuffer, audioOutput, numberOfSamples);
         return true;
     } else return false;
 }
 
-void LowLevelMusicProcessor::audioPlayEvents(void *clientData, SuperpoweredAdvancedAudioPlayerEvent event,
-                     void *value) {
+void LowLevelMusicProcessor::audioPlayEvents(void *clientData,
+                                             SuperpoweredAdvancedAudioPlayerEvent event,
+                                             void *value) {
     switch (event) {
         case SuperpoweredAdvancedAudioPlayerEvent_LoadError:
             LOGE("LoadError, reason: %s", (const char *) value);
@@ -74,72 +68,16 @@ void LowLevelMusicProcessor::audioPlayEvents(void *clientData, SuperpoweredAdvan
     }
 }
 
-inline void LowLevelMusicProcessor::setBoolField(JNIEnv *javaEnvironment,
-                                                 jobject self,
-                                                 jclass thisClass,
-                                                 const char *name,
-                                                 bool value) {
-    javaEnvironment->SetBooleanField(self, javaEnvironment->GetFieldID(thisClass, name, "Z"), value);
-}
-
-inline float LowLevelMusicProcessor::floatToFrequency(float value) {
-    if (value > 0.97f) return MAXFREQ;
-    if (value < 0.03f) return MINFREQ;
-    value = powf(10.0f, (value + ((0.4f - fabsf(value - 0.4f)) * 0.3f)) * log10f(MAXFREQ - MINFREQ)) + MINFREQ;
-    return value < MAXFREQ ? value : MAXFREQ;
-}
-
-inline bool LowLevelMusicProcessor::renameFile(const char *fileFrom, const char *fileTo) {
-    if (rename(fileFrom, fileTo) == 0) {
-        LOGD("file renamed");
-        return true;
-    } else {
-        LOGE("File rename error");
-        return false;
-    }
-}
-
-inline void LowLevelMusicProcessor::createFileName(const char *fileNameFrom,
-                                                   char *fileNameTo,
-                                                   CurrentFX currentFX) {
-    int fileNameFromStrLength = strlen(fileNameFrom);
-
-    // remove suffix ".wav" in file
-    strncpy(fileNameTo, fileNameFrom, fileNameFromStrLength - SIZE_OF_FILE_TYPE_SUFFIX);
-    fileNameTo[fileNameFromStrLength - SIZE_OF_FILE_TYPE_SUFFIX] = '\0';
-
-    // add suffix depends on type of FX effects
-    switch (currentFX) {
-        case FILTER:
-            strcat(fileNameTo, FX_FILTER_SUFFIX);
-            break;
-        case ROLL:
-            strcat(fileNameTo, FX_ROLL_SUFFIX);
-            break;
-        case ECHO:
-            strcat(fileNameTo, FX_ECHO_SUFFIX);
-            break;
-        case REVERB:
-            strcat(fileNameTo, FX_REVERB_SUFFIX);
-            break;
-        default:
-            strcat(fileNameTo, FX_FLANGER_SUFFIX);
-    }
-
-    LOGD("Str: %s'", fileNameTo);
-    LOGD("Str len: %d, original std len: %d", strlen(fileNameTo), fileNameFromStrLength);
-}
-
 LowLevelMusicProcessor::LowLevelMusicProcessor(int samplerate,
                                                int buffersize,
-                                               int mixTrackStartOffset,
-                                               int mixTrackLength):
+                                               const char *musicFolderPath):
         mSampleRate(samplerate),
         mBufferSize(buffersize),
-        mMixTrackStartOffset(mixTrackStartOffset),
-        mMixTrackLength(mixTrackLength),
         mCurrentFX(CurrentFX::FLANGER),
         mIsRecording(false) {
+    mSavePath = new char [strlen(musicFolderPath) + strlen(SAVED_FILE_NAME) + 1];
+    Utils::prepareSavePath(mSavePath, musicFolderPath);
+
     sStereoBuffer = new float [CHANNELS_NUMBER * mBufferSize + 128];
 
     sAudioInput = new SuperpoweredAndroidAudioIO(mSampleRate, mBufferSize, true, true,
@@ -147,15 +85,15 @@ LowLevelMusicProcessor::LowLevelMusicProcessor(int samplerate,
                                                 NULL,
                                                 -1,
                                                 -1,
-                                                mBufferSize * CHANNELS_NUMBER);
+                                                mBufferSize * CHANNELS_NUMBER * 2);
     sAudioInput->stop();
 
     sAudioOutput = new SuperpoweredAndroidAudioIO(mSampleRate, mBufferSize, false, true,
-                                              outputAudioProcessing,
-                                              NULL,
-                                              -1,
-                                              -1,
-                                              mBufferSize * CHANNELS_NUMBER);
+                                                  outputAudioProcessing,
+                                                  NULL,
+                                                  -1,
+                                                  -1,
+                                                  mBufferSize * CHANNELS_NUMBER);
     sAudioOutput->stop();
 
     sPlayer = new SuperpoweredAdvancedAudioPlayer(NULL, audioPlayEvents, mSampleRate, 0);
@@ -173,7 +111,7 @@ void LowLevelMusicProcessor::startRecording() {
         togglePlayer();
     }
     if (!mIsRecording) {
-        sFile = createWAV(sSavePath, mSampleRate, CHANNELS_NUMBER);
+        sFile = createWAV(mSavePath, mSampleRate, CHANNELS_NUMBER);
         sAudioInput->start();
         mIsRecording = true;
     } else {
@@ -182,14 +120,14 @@ void LowLevelMusicProcessor::startRecording() {
 }
 
 void LowLevelMusicProcessor::stopRecording() {
-    LOGD("Stop");
+    LOGD("Stop recording");
     if (mIsRecording) {
         sAudioInput->stop();
         closeWAV(sFile);
         if (fclose(sFile) != 0) {
-            LOGE("Error in closing save_record.wav");
+            LOGE("Error in closing save_record_fwrite.wav");
         }
-        sPlayer->open(sSavePath);
+        sPlayer->open(mSavePath);
         mIsRecording = false;
     } else {
         LOGD("already stopped");
@@ -204,16 +142,18 @@ void LowLevelMusicProcessor::saveWithEffect() {
         stopRecording();
     }
     if (sLastRecordedFileName == NULL) {
-        sLastRecordedFileName = new char[strlen(sSavePath) + SIZE_OF_FX_SUFFIX];
+        sLastRecordedFileName = new char[strlen(mSavePath) + SIZE_OF_FX_SUFFIX];
     }
-    createFileName(sSavePath, sLastRecordedFileName, mCurrentFX);
+    Utils::createFileName(mSavePath, sLastRecordedFileName, mCurrentFX);
     copyToFile();
 }
 
 void LowLevelMusicProcessor::copyToFile() {
-    FILE *sourceFile = fopen(sSavePath, "r");
+    FILE *sourceFile = fopen(mSavePath, "r");
     FILE *resultFile = createWAV(sLastRecordedFileName, mSampleRate, CHANNELS_NUMBER);
+
     unsigned int n;
+    unsigned int numberOfSamplesToProcess;
     short int *intBuffer = NULL;
 
     if (sourceFile == NULL) {
@@ -224,24 +164,20 @@ void LowLevelMusicProcessor::copyToFile() {
         LOGE("Can't open result file");
         return;
     }
-    onFxValue(80);
+    onFxValue(ON_SAVE_WITH_FX_VALUE);
 
-    fseek(sourceFile, WAV_HEADER_SIZE, SEEK_SET);
+    // skip first 44 bites of WAV Header
+    fseek(sourceFile, SIZE_OF_WAV_HEADER, SEEK_SET);
 
     if (intBuffer == NULL) {
-        LOGD("new short int[2048]");
         intBuffer = new short int[SAMPLE_RATE * CHANNELS_NUMBER];
     }
-    LOGD("Copy To File");
     while ((n = fread(intBuffer, sizeof(short int), SAMPLE_RATE, sourceFile)) > 0)
     {
         SuperpoweredShortIntToFloat(intBuffer, sStereoBuffer, SAMPLE_RATE);
 
-        sFlanger->process(sStereoBuffer, sStereoBuffer, n / 2);
-        sFilter->process(sStereoBuffer, sStereoBuffer, n / 2);
-        sRoll->process(sStereoBuffer, sStereoBuffer, n / 2);
-        sEcho->process(sStereoBuffer, sStereoBuffer, n / 2);
-        sReverb->process(sStereoBuffer, sStereoBuffer, n / 2);
+        numberOfSamplesToProcess = n / 2;
+        processAllFX(numberOfSamplesToProcess);
 
         SuperpoweredFloatToShortInt(sStereoBuffer, intBuffer, SAMPLE_RATE);
 
@@ -252,7 +188,6 @@ void LowLevelMusicProcessor::copyToFile() {
             fflush(resultFile);
         }
     }
-    LOGD("Before clear intBuffer");
     delete []intBuffer;
     LOGD("Copy completed");
     offAllFX();
@@ -276,7 +211,7 @@ void LowLevelMusicProcessor::togglePlayer() {
         LOGD("Pause");
     } else {
         if (sLastRecordedFileName == NULL) {
-            sPlayer->open(sSavePath);
+            sPlayer->open(mSavePath);
         } else {
             sPlayer->open(sLastRecordedFileName);
         }
@@ -288,7 +223,8 @@ void LowLevelMusicProcessor::togglePlayer() {
 
 void LowLevelMusicProcessor::updateStatus(JNIEnv *javaEnvironment, jobject self) {
     jclass thisClass = javaEnvironment->GetObjectClass(self);
-    setBoolField(javaEnvironment, self, thisClass, "isPlaying", sPlayer->playing);
+    Utils::setBoolField(javaEnvironment, self, thisClass, "isPlaying", sPlayer->playing);
+    Utils::setBoolField(javaEnvironment, self, thisClass, "isRecording", mIsRecording);
 }
 
 /**
@@ -307,7 +243,7 @@ void LowLevelMusicProcessor::onFxValue(int iValue) {
     switch (mCurrentFX) {
         case FILTER:
             LOGD("Filter enabled");
-            sFilter->setResonantParameters(floatToFrequency(1.0f - value), 0.2f);
+            sFilter->setResonantParameters(Utils::floatToFrequency(1.0f - value), 0.2f);
             sFilter->enable(true);
             break;
         case ROLL:
@@ -343,6 +279,14 @@ void LowLevelMusicProcessor::onFxValue(int iValue) {
     }
 }
 
+inline void LowLevelMusicProcessor::processAllFX(int numberOfSamples) {
+    sFlanger->process(sStereoBuffer, sStereoBuffer, numberOfSamples);
+    sFilter->process(sStereoBuffer, sStereoBuffer, numberOfSamples);
+    sRoll->process(sStereoBuffer, sStereoBuffer, numberOfSamples);
+    sEcho->process(sStereoBuffer, sStereoBuffer, numberOfSamples);
+    sReverb->process(sStereoBuffer, sStereoBuffer, numberOfSamples);
+}
+
 void LowLevelMusicProcessor::onFxOff() {
     offAllFX();
 }
@@ -357,12 +301,12 @@ void LowLevelMusicProcessor::offAllFX() {
 }
 
 LowLevelMusicProcessor::~LowLevelMusicProcessor() {
-    // clear audioIO and player pointers
+    // clear AudioIO, player and recorder pointers
     delete sAudioInput;
     delete sAudioOutput;
     delete sPlayer;
 
-    // clear effects pointers
+    // clear FX pointers
     delete sRoll;
     delete sFilter;
     delete sFlanger;
@@ -371,15 +315,14 @@ LowLevelMusicProcessor::~LowLevelMusicProcessor() {
 
     // clear resources
     delete []sLastRecordedFileName;
-
-//    free(sStereoBuffer);
+    delete []mSavePath;
     delete []sStereoBuffer;
 }
 
 // Ugly Java-native bridges - JNI, that is.
 extern "C" {
 JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_Init(
-        JNIEnv *javaEnvironment, jobject self, jlong samplerate, jlong buffersize, jstring path, jlong startOffset, jlong length);
+        JNIEnv *javaEnvironment, jobject self, jlong samplerate, jlong buffersize, jstring path);
 JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_StartRecord(
         JNIEnv *javaEnvironment, jobject self);
 JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_StopRecord(
@@ -409,10 +352,10 @@ JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_Cleanup(
  * Initialization of JNI environment interface
  */
 JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_Init(
-        JNIEnv *javaEnvironment, jobject self, jlong samplerate, jlong buffersize, jstring path, jlong startOffset, jlong length) {
+        JNIEnv *javaEnvironment, jobject self, jlong samplerate, jlong buffersize, jstring path) {
     const char *tempPath = javaEnvironment->GetStringUTFChars(path, 0);
 
-    lowLevelMusicProcessor = new LowLevelMusicProcessor(samplerate, buffersize, startOffset, length);
+    lowLevelMusicProcessor = new LowLevelMusicProcessor(samplerate, buffersize, tempPath);
 
     javaEnvironment->ReleaseStringUTFChars(path, tempPath);
 }

@@ -2,26 +2,24 @@ package com.superpowered.frequencydomain;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 
-import java.io.IOException;
-
 
 public class MainActivity extends Activity {
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private static final int UI_UPDATER_DELAY = 50;
 
-    private Button mStopRecordButton;
     private Button mStartRecordButton;
     private Button mPlaySongButton;
     private Button mSaveButton;
@@ -30,8 +28,14 @@ public class MainActivity extends Activity {
 
     private Handler mHandler;
 
-    // this values come from native side
+
+    /**
+     * this values come from native side
+     *
+     * @see #UpdateStatus()
+     */
     private boolean isPlaying;
+    private boolean isRecording;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,19 +53,10 @@ public class MainActivity extends Activity {
         if (buffersizeString == null) buffersizeString = "512";
 
         String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getAbsolutePath();
-
-        AssetFileDescriptor musicFile = getResources().openRawResourceFd(R.raw.lycka);
-        long startOffset = musicFile.getStartOffset();
-        long lenght = musicFile.getLength();
-
-        try {
-            musicFile.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        Log.d(TAG, path);
         System.loadLibrary("FrequencyDomain");
-        Init(Integer.parseInt(samplerateString), Integer.parseInt(buffersizeString), path, startOffset, lenght);
+
+        Init(Integer.parseInt(samplerateString), Integer.parseInt(buffersizeString), path);
     }
 
     private void initUI() {
@@ -71,30 +66,26 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 UpdateStatus();
-                mPlaySongButton.setText(isPlaying ? R.string.pause_song : R.string.play_song);
+                UpdateUI();
                 mHandler.postDelayed(this, UI_UPDATER_DELAY);
             }
         };
         mHandler = new Handler();
         mHandler.postDelayed(UIUpdater, UI_UPDATER_DELAY);
 
-        mStopRecordButton = (Button) findViewById(R.id.stop_record_button);
-        mStopRecordButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StopRecord();
-            }
-        });
-
-        mStartRecordButton = (Button) findViewById(R.id.start_record_button);
+        mStartRecordButton = (Button) findViewById(R.id.control_record_button);
         mStartRecordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StartRecord();
+                if (!isRecording) {
+                    StartRecord();
+                } else {
+                    StopRecord();
+                }
             }
         });
 
-        mPlaySongButton = (Button) findViewById(R.id.play_song_button);
+        mPlaySongButton = (Button) findViewById(R.id.control_song_play_button);
         mPlaySongButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,13 +129,18 @@ public class MainActivity extends Activity {
         });
     }
 
+    private void UpdateUI() {
+        mPlaySongButton.setText(isPlaying ? R.string.pause_song : R.string.play_song);
+        mStartRecordButton.setText(isRecording ? R.string.stop_record : R.string.start_record);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Cleanup();
     }
 
-    private native void Init(long samplerate, long buffersize, String path, long startOffset, long length);
+    private native void Init(long samplerate, long buffersize, String path);
 
     private native void StartRecord();
 

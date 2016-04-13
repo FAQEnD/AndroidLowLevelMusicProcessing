@@ -5,6 +5,10 @@
 #ifndef FREQUENCYDOMAIN_FREQUENCYDOMAIN_H
 #define FREQUENCYDOMAIN_FREQUENCYDOMAIN_H
 
+#include <android/log.h>
+
+#include "Superpowered/SuperpoweredAndroidAudioIO.h"
+#include "Superpowered/SuperpoweredAdvancedAudioPlayer.h"
 #include "Superpowered/SuperpoweredRoll.h"
 #include "Superpowered/SuperpoweredFilter.h"
 #include "Superpowered/SuperpoweredFlanger.h"
@@ -18,18 +22,11 @@
 
 static const int CHANNELS_NUMBER = 2;
 static const int SIZE_OF_FX_SUFFIX = 15;
-static const int SIZE_OF_FILE_TYPE_SUFFIX = 4;
-static const int WAV_HEADER_SIZE = 44;
+static const int SIZE_OF_WAV_HEADER = 44;
 static const int SAMPLE_RATE = 1024;
+static const int ON_SAVE_WITH_FX_VALUE = 70;
 
-static const float MINFREQ = 60.0f;
-static const float MAXFREQ = 20000.0f;
-
-static const char *FX_FILTER_SUFFIX = "_filter.wav";
-static const char *FX_ROLL_SUFFIX = "_roll.wav";
-static const char *FX_FLANGER_SUFFIX = "_flanger.wav";
-static const char *FX_ECHO_SUFFIX = "_echo.wav";
-static const char *FX_REVERB_SUFFIX = "_reverb.wav";
+static const char *SAVED_FILE_NAME = "/saved_record.wav";
 
 class LowLevelMusicProcessor {
 public:
@@ -47,8 +44,6 @@ private:
     static SuperpoweredAndroidAudioIO *sAudioOutput;
     static SuperpoweredAdvancedAudioPlayer *sPlayer;
 
-    static const char *sSavePath;
-
     static char *sLastRecordedFileName;
     static float *sStereoBuffer;
     static FILE *sFile;
@@ -62,10 +57,10 @@ private:
 
     int mSampleRate;
     int mBufferSize;
-    int mMixTrackStartOffset;
-    int mMixTrackLength;
 
     bool mIsRecording;
+
+    char *mSavePath;
 
     CurrentFX mCurrentFX;
 
@@ -78,21 +73,10 @@ private:
     static void audioPlayEvents(void *clientData, SuperpoweredAdvancedAudioPlayerEvent event,
                                 void *value);
 
-    static inline void setBoolField(JNIEnv *javaEnvironment,
-                                    jobject self,
-                                    jclass thisClass,
-                                    const char *name,
-                                    bool value);
-
-    static inline float floatToFrequency(float value);
-
-    static inline bool renameFile(const char *fileFrom, const char *fileTo);
-
-    static inline void createFileName(const char *fileNameFrom, char *fileNameTo, CurrentFX currentFX);
+    static inline void processAllFX(int numberOfSamples);
 
 public:
-    LowLevelMusicProcessor(int samplerate, int buffersize, int mixTrackStartOffset,
-                           int mixTrackLength);
+    LowLevelMusicProcessor(int samplerate, int buffersize, const char *musicFolderPath);
 
     void startRecording();
 

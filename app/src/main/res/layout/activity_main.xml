@@ -9,26 +9,25 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/stop_record_button"
+        android:id="@+id/control_record_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/start_record_button"
-        android:layout_centerHorizontal="true"
-        android:text="@string/stop_record" />
-
-    <Button
-        android:id="@+id/start_record_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_alignEnd="@+id/recording_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/recording_text"
+        android:layout_alignTop="@+id/control_song_play_button"
         android:text="@string/start_record" />
 
     <Button
-        android:id="@+id/play_song_button"
+        android:id="@+id/control_song_play_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/stop_record_button"
-        android:layout_centerHorizontal="true"
+        android:layout_alignEnd="@+id/fx_fader"
+        android:layout_alignLeft="@+id/playing_song_text"
+        android:layout_alignRight="@+id/fx_fader"
+        android:layout_alignStart="@+id/playing_song_text"
+        android:layout_below="@+id/playing_song_text"
         android:text="@string/play_song" />
 
     <Button
@@ -36,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save_button"
-        android:layout_below="@+id/fx_fader"
+        android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true" />
 
     <RadioGroup
@@ -45,38 +44,43 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/radio_flanger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/fx_effects_flanger_radio" />
+            android:text="@string/fx_effects_flanger_radio"
+            android:textSize="10dp" />
 
         <RadioButton
             android:id="@+id/radio_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fx_effects_filter_radio" />
+            android:text="@string/fx_effects_filter_radio"
+            android:textSize="10dp" />
 
         <RadioButton
             android:id="@+id/radio_roll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fx_effects_roll_radio" />
+            android:text="@string/fx_effects_roll_radio"
+            android:textSize="10dp" />
 
         <RadioButton
             android:id="@+id/radio_echo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fx_effects_echo_radio" />
+            android:text="@string/fx_effects_echo_radio"
+            android:textSize="10dp" />
 
         <RadioButton
             android:id="@+id/reverb_radio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fx_effects_reverb_radio"/>
+            android:text="@string/fx_effects_reverb_radio"
+            android:textSize="10dp" />
 
     </RadioGroup>
 
@@ -86,5 +90,54 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/fx_effects_radio_group"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/recording_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/control_record_button"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/save_with_effect_button"
+        android:layout_toStartOf="@+id/save_with_effect_button"
+        android:gravity="center"
+        android:text="@string/recording_text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/playing_song_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/save_with_effect_button"
+        android:layout_toRightOf="@+id/save_with_effect_button"
+        android:gravity="center"
+        android:text="@string/play_song_text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fx_effects_radio_group"
+        android:layout_alignEnd="@+id/fx_effects_radio_group"
+        android:layout_alignLeft="@+id/fx_effects_radio_group"
+        android:layout_alignRight="@+id/fx_effects_radio_group"
+        android:layout_alignStart="@+id/fx_effects_radio_group"
+        android:gravity="center"
+        android:text="@string/audio_effects_text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/save_with_effect_text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/fx_fader"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="59dp" />
 
 </RelativeLayout>
