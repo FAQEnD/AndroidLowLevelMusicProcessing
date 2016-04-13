@@ -58,17 +58,17 @@ JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_UpdateStatus(
  */
 JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_OnFxSelect(
         JNIEnv *javaEnvironment, jobject self, jint value) {
-    lowLevelMusicProcessor->onFxSelect(value);
+    lowLevelMusicProcessor->setFX(value);
 }
 
 JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_OnFxValue(
         JNIEnv *javaEnvironment, jobject self, jint value) {
-    lowLevelMusicProcessor->onFxValue(value);
+    lowLevelMusicProcessor->onFX(value);
 }
 
 JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_OnFxOff(
         JNIEnv *javaEnvironment, jobject self) {
-    lowLevelMusicProcessor->onFxOff();
+    lowLevelMusicProcessor->offFX();
 }
 
 /**

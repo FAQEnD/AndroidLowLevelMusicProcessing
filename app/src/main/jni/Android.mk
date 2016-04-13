@@ -23,7 +23,7 @@ LOCAL_MODULE := FrequencyDomain
 
 LOCAL_SRC_FILES :=  \
 $(SUPERPOWERED_PATH)/SuperpoweredAndroidAudioIO.cpp  \
-LowLevelMusicProcessor.cpp Utils.cpp JNIInterface.cpp
+LowLevelMusicProcessor.cpp Utils.cpp JNIInterface.cpp FXManager.cpp
 LOCAL_C_INCLUDES += $(SUPERPOWERED_PATH)
 
 LOCAL_LDLIBS := -llog -landroid -lOpenSLES 

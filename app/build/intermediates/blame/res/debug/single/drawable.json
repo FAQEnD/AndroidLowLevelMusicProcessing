@@ -48,12 +48,12 @@
         "source": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/drawable/abc_dialog_material_background_dark.xml"
     },
     {
-        "merged": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/res/merged/debug/drawable/abc_item_background_holo_light.xml",
-        "source": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/drawable/abc_item_background_holo_light.xml"
-    },
-    {
         "merged": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/res/merged/debug/drawable/abc_dialog_material_background_light.xml",
         "source": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/drawable/abc_dialog_material_background_light.xml"
+    },
+    {
+        "merged": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/res/merged/debug/drawable/abc_item_background_holo_light.xml",
+        "source": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/drawable/abc_item_background_holo_light.xml"
     },
     {
         "merged": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/res/merged/debug/drawable/abc_btn_radio_material.xml",

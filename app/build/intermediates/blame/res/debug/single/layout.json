@@ -1,23 +1,23 @@
 [
     {
-        "merged": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/res/merged/debug/layout/notification_template_part_chronometer.xml",
-        "source": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/layout/notification_template_part_chronometer.xml"
-    },
-    {
         "merged": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/res/merged/debug/layout/abc_alert_dialog_material.xml",
         "source": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/layout/abc_alert_dialog_material.xml"
+    },
+    {
+        "merged": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/res/merged/debug/layout/notification_template_part_chronometer.xml",
+        "source": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/layout/notification_template_part_chronometer.xml"
     },
     {
         "merged": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/res/merged/debug/layout/abc_screen_content_include.xml",
         "source": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/layout/abc_screen_content_include.xml"
     },
     {
-        "merged": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/res/merged/debug/layout/abc_action_bar_view_list_nav_layout.xml",
-        "source": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/layout/abc_action_bar_view_list_nav_layout.xml"
-    },
-    {
         "merged": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/res/merged/debug/layout/abc_list_menu_item_layout.xml",
         "source": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/layout/abc_list_menu_item_layout.xml"
+    },
+    {
+        "merged": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/res/merged/debug/layout/abc_action_bar_view_list_nav_layout.xml",
+        "source": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/layout/abc_action_bar_view_list_nav_layout.xml"
     },
     {
         "merged": "/home/antonsmusiienko/StudioProjects/SuperPowerSDKExample/FrequencyDomain/app/build/intermediates/res/merged/debug/layout/select_dialog_singlechoice_material.xml",

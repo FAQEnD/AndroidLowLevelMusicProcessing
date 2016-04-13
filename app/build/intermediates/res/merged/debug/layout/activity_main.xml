@@ -145,23 +145,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/some_effects_text"
+        android:layout_toEndOf="@+id/control_record_button"
         android:layout_toLeftOf="@+id/control_song_play_button"
         android:layout_toRightOf="@+id/control_record_button"
-        android:layout_toEndOf="@+id/control_record_button"
         android:checked="true" />
 
     <TextView
         android:id="@+id/voice_playback_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/voice_playback_toggle_text"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_below="@+id/control_record_button"
         android:layout_above="@+id/voice_playback_toggle"
-        android:layout_alignRight="@+id/voice_playback_toggle"
         android:layout_alignEnd="@+id/voice_playback_toggle"
         android:layout_alignLeft="@+id/voice_playback_toggle"
+        android:layout_alignRight="@+id/voice_playback_toggle"
         android:layout_alignStart="@+id/voice_playback_toggle"
-        android:gravity="center_horizontal|bottom" />
+        android:layout_below="@+id/control_record_button"
+        android:gravity="center_horizontal|bottom"
+        android:text="@string/voice_playback_toggle_text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

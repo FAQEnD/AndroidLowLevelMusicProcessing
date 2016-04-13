@@ -15,8 +15,8 @@ float Utils::floatToFrequency(float value) {
 }
 
 void Utils::createFileName(const char *fileNameFrom,
-                                                   char *fileNameTo,
-                                                   LowLevelMusicProcessor::CurrentFX currentFX) {
+                           char *fileNameTo,
+                           FXManager::CurrentFX currentFX) {
     int fileNameFromStrLength = strlen(fileNameFrom);
 
     // remove suffix ".wav" in file
@@ -24,22 +24,7 @@ void Utils::createFileName(const char *fileNameFrom,
     fileNameTo[fileNameFromStrLength - SIZE_OF_FILE_TYPE_SUFFIX] = '\0';
 
     // add suffix depends on type of FX effects
-    switch (currentFX) {
-        case LowLevelMusicProcessor::FILTER:
-            strcat(fileNameTo, FX_FILTER_SUFFIX);
-            break;
-        case LowLevelMusicProcessor::ROLL:
-            strcat(fileNameTo, FX_ROLL_SUFFIX);
-            break;
-        case LowLevelMusicProcessor::ECHO:
-            strcat(fileNameTo, FX_ECHO_SUFFIX);
-            break;
-        case LowLevelMusicProcessor::REVERB:
-            strcat(fileNameTo, FX_REVERB_SUFFIX);
-            break;
-        default:
-            strcat(fileNameTo, FX_FLANGER_SUFFIX);
-    }
+    strcat(fileNameTo, FXManager::getActualFXSuffix(currentFX));
 
     LOGD("Str: %s'", fileNameTo);
     LOGD("Str len: %d, original std len: %d", strlen(fileNameTo), fileNameFromStrLength);

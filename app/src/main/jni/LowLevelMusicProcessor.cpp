@@ -3,10 +3,12 @@
 #include "Superpowered/SuperpoweredFrequencyDomain.h"
 #include "Superpowered/SuperpoweredSimple.h"
 #include "Superpowered/SuperpoweredRecorder.h"
+
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_AndroidConfiguration.h>
 
 #include "Utils.h"
+#include "FXManager.h"
 
 /**
  * LowLevelMusicProcessor init of static members
@@ -19,12 +21,6 @@ char *LowLevelMusicProcessor::sLastRecordedFileName;
 float *LowLevelMusicProcessor::sStereoBuffer;
 FILE *LowLevelMusicProcessor::sFile;
 bool LowLevelMusicProcessor::sIsVoicePlaybackOn;
-
-SuperpoweredRoll *LowLevelMusicProcessor::sRoll;
-SuperpoweredFilter *LowLevelMusicProcessor::sFilter;
-SuperpoweredFlanger *LowLevelMusicProcessor::sFlanger;
-SuperpoweredEcho *LowLevelMusicProcessor::sEcho;
-SuperpoweredReverb *LowLevelMusicProcessor::sReverb;
 
 bool LowLevelMusicProcessor::recordAudioProcessing(void *clientdata, short int *audioInput,
                                   int numberOfSamples, int samplerate) {
@@ -40,7 +36,7 @@ bool LowLevelMusicProcessor::outputAudioProcessing(void *clientdata, short int *
                                                    int samplerate) {
     if (sPlayer->process(sStereoBuffer, false, numberOfSamples)) {
 
-        processAllFX(numberOfSamples);
+        FXManager::processAllFX(sStereoBuffer, numberOfSamples);
 
         SuperpoweredFloatToShortInt(sStereoBuffer, audioOutput, numberOfSamples);
         return true;
@@ -70,7 +66,6 @@ LowLevelMusicProcessor::LowLevelMusicProcessor(int samplerate,
                                                const char *musicFolderPath):
         mSampleRate(samplerate),
         mBufferSize(buffersize),
-        mCurrentFX(CurrentFX::FLANGER),
         mIsRecording(false) {
     sIsVoicePlaybackOn = true;
 
@@ -97,11 +92,7 @@ LowLevelMusicProcessor::LowLevelMusicProcessor(int samplerate,
 
     sPlayer = new SuperpoweredAdvancedAudioPlayer(NULL, audioPlayEvents, mSampleRate, 0);
 
-    sRoll = new SuperpoweredRoll(mSampleRate);
-    sFilter = new SuperpoweredFilter(SuperpoweredFilter_Resonant_Lowpass, mSampleRate);
-    sFlanger = new SuperpoweredFlanger(mSampleRate);
-    sEcho = new SuperpoweredEcho(mSampleRate);
-    sReverb = new SuperpoweredReverb(mSampleRate);
+    mFXManager = new FXManager(mSampleRate);
 }
 
 void LowLevelMusicProcessor::startRecording() {
@@ -143,10 +134,10 @@ void LowLevelMusicProcessor::saveWithEffect() {
     if (sLastRecordedFileName == NULL) {
         sLastRecordedFileName = new char[strlen(mSavePath) + SIZE_OF_FX_SUFFIX];
     }
-    Utils::createFileName(mSavePath, sLastRecordedFileName, mCurrentFX);
-    onFxValue(ON_SAVE_WITH_FX_VALUE);
+    Utils::createFileName(mSavePath, sLastRecordedFileName, mFXManager->getFxValue());
+    mFXManager->onFxValue(ON_SAVE_WITH_FX_VALUE);
     copyToFile(mSavePath, sLastRecordedFileName, mSampleRate);
-    offAllFX();
+    mFXManager->offAllFX();
 }
 
 void LowLevelMusicProcessor::copyToFile(const char *sourcePath, const char *resultPath, int sampleRate) {
@@ -179,7 +170,7 @@ void LowLevelMusicProcessor::copyToFile(const char *sourcePath, const char *resu
         SuperpoweredShortIntToFloat(intBuffer, sStereoBuffer, SAMPLE_RATE);
 
         numberOfSamplesToProcess = n / 2;
-        processAllFX(numberOfSamplesToProcess);
+        FXManager::processAllFX(sStereoBuffer, numberOfSamplesToProcess);
 
         SuperpoweredFloatToShortInt(sStereoBuffer, intBuffer, SAMPLE_RATE);
 
@@ -233,77 +224,16 @@ void LowLevelMusicProcessor::updateStatus(JNIEnv *javaEnvironment, jobject self)
     Utils::setBoolField(javaEnvironment, self, thisClass, "isRecording", mIsRecording);
 }
 
-/**
- * Audio FX
- */
-void LowLevelMusicProcessor::onFxSelect(int value) {
-    mCurrentFX = (CurrentFX) value;
-    LOGD("CurrentFX: %d", mCurrentFX);
+void LowLevelMusicProcessor::setFX(int value) {
+    mFXManager->setFxValue(value);
 }
 
-void LowLevelMusicProcessor::onFxValue(int iValue) {
-    float value = (float) iValue * 0.01f;
-    // TODO: need to decrease calls of offAllFX() method
-    offAllFX();
-
-    switch (mCurrentFX) {
-        case FILTER:
-            LOGD("Filter enabled");
-            sFilter->setResonantParameters(Utils::floatToFrequency(1.0f - value), 0.2f);
-            sFilter->enable(true);
-            break;
-        case ROLL:
-            LOGD("Roll enabled");
-            if (value > 0.8f) {
-                sRoll->beats = 0.0625f;
-            } else if (value > 0.6f) {
-                sRoll->beats = 0.125f;
-            } else if (value > 0.4f) {
-                sRoll->beats = 0.25f;
-            } else if (value > 0.2f) {
-                sRoll->beats = 0.5f;
-            } else {
-                sRoll->beats = 1.0f;
-            }
-            sRoll->enable(true);
-            break;
-        case ECHO:
-            LOGD("Echo enabled");
-            sEcho->setMix(value);
-            sEcho->enable(true);
-            break;
-        case REVERB:
-            LOGD("Reverb enabled");
-            sReverb->setMix(value);
-            sReverb->enable(true);
-            break;
-        default:
-            LOGD("Flanger enabled");
-            sFlanger->setWet(value);
-            sFlanger->enable(true);
-            break;
-    }
+void LowLevelMusicProcessor::onFX(int value) {
+    mFXManager->onFxValue(value);
 }
 
-inline void LowLevelMusicProcessor::processAllFX(int numberOfSamples) {
-    sFlanger->process(sStereoBuffer, sStereoBuffer, numberOfSamples);
-    sFilter->process(sStereoBuffer, sStereoBuffer, numberOfSamples);
-    sRoll->process(sStereoBuffer, sStereoBuffer, numberOfSamples);
-    sEcho->process(sStereoBuffer, sStereoBuffer, numberOfSamples);
-    sReverb->process(sStereoBuffer, sStereoBuffer, numberOfSamples);
-}
-
-void LowLevelMusicProcessor::onFxOff() {
-    offAllFX();
-}
-
-void LowLevelMusicProcessor::offAllFX() {
-    LOGD("Off all FX");
-    sRoll->enable(false);
-    sFilter->enable(false);
-    sFlanger->enable(false);
-    sEcho->enable(false);
-    sReverb->enable(false);
+void LowLevelMusicProcessor::offFX() {
+    mFXManager->offAllFX();
 }
 
 LowLevelMusicProcessor::~LowLevelMusicProcessor() {
@@ -311,13 +241,7 @@ LowLevelMusicProcessor::~LowLevelMusicProcessor() {
     delete sAudioInput;
     delete sAudioOutput;
     delete sPlayer;
-
-    // clear FX pointers
-    delete sRoll;
-    delete sFilter;
-    delete sFlanger;
-    delete sEcho;
-    delete sReverb;
+    delete mFXManager;
 
     // clear resources
     delete []sLastRecordedFileName;
