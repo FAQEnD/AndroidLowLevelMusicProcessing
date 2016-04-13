@@ -34,3 +34,5 @@ captures/
 *.o
 *.d
 *.so
+*.a
+*.jar

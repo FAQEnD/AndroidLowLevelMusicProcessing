@@ -27,24 +27,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="efc43536-4060-43ee-bb33-60f03717915a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/jni/FXManager.cpp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/jni/FXManager.h" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/obj/local/arm64-v8a/objs/FrequencyDomain/FrequencyDomain.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/obj/local/arm64-v8a/objs/FrequencyDomain/FrequencyDomain.o.d" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/obj/local/armeabi-v7a/objs/FrequencyDomain/FrequencyDomain.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/obj/local/armeabi-v7a/objs/FrequencyDomain/FrequencyDomain.o.d" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86/objs/FrequencyDomain/FrequencyDomain.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86/objs/FrequencyDomain/FrequencyDomain.o.d" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86_64/objs/FrequencyDomain/FrequencyDomain.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86_64/objs/FrequencyDomain/FrequencyDomain.o.d" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/arm64-v8a/objs/FrequencyDomain/LowLevelMusicProcessor.o" afterPath="$PROJECT_DIR$/app/src/main/obj/local/arm64-v8a/objs/FrequencyDomain/LowLevelMusicProcessor.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/armeabi-v7a/objs/FrequencyDomain/LowLevelMusicProcessor.o" afterPath="$PROJECT_DIR$/app/src/main/obj/local/armeabi-v7a/objs/FrequencyDomain/LowLevelMusicProcessor.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86/objs/FrequencyDomain/LowLevelMusicProcessor.o" afterPath="$PROJECT_DIR$/app/src/main/obj/local/x86/objs/FrequencyDomain/LowLevelMusicProcessor.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86_64/objs/FrequencyDomain/LowLevelMusicProcessor.o" afterPath="$PROJECT_DIR$/app/src/main/obj/local/x86_64/objs/FrequencyDomain/LowLevelMusicProcessor.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/arm64-v8a/objs/FrequencyDomain/Utils.o" afterPath="$PROJECT_DIR$/app/src/main/obj/local/arm64-v8a/objs/FrequencyDomain/Utils.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/armeabi-v7a/objs/FrequencyDomain/Utils.o" afterPath="$PROJECT_DIR$/app/src/main/obj/local/armeabi-v7a/objs/FrequencyDomain/Utils.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86/objs/FrequencyDomain/Utils.o" afterPath="$PROJECT_DIR$/app/src/main/obj/local/x86/objs/FrequencyDomain/Utils.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86_64/objs/FrequencyDomain/Utils.o" afterPath="$PROJECT_DIR$/app/src/main/obj/local/x86_64/objs/FrequencyDomain/Utils.o" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/outputs/apk/app-debug-unaligned.apk" afterPath="$PROJECT_DIR$/app/build/outputs/apk/app-debug-unaligned.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/outputs/apk/app-debug.apk" afterPath="$PROJECT_DIR$/app/build/outputs/apk/app-debug.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/cache.properties.lock" />
@@ -60,43 +42,9 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0_4cd209d11745e07634670e92c818acc0c5dce89c.jar" afterPath="$PROJECT_DIR$/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0_4cd209d11745e07634670e92c818acc0c5dce89c.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/Android.mk" afterPath="$PROJECT_DIR$/app/src/main/jni/Android.mk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/Application.mk" afterPath="$PROJECT_DIR$/app/src/main/jni/Application.mk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/JNIInterface.cpp" afterPath="$PROJECT_DIR$/app/src/main/jni/JNIInterface.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/LowLevelMusicProcessor.cpp" afterPath="$PROJECT_DIR$/app/src/main/jni/LowLevelMusicProcessor.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/LowLevelMusicProcessor.h" afterPath="$PROJECT_DIR$/app/src/main/jni/LowLevelMusicProcessor.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/arm64-v8a/objs/FrequencyDomain/LowLevelMusicProcessor.o.d" afterPath="$PROJECT_DIR$/app/src/main/obj/local/arm64-v8a/objs/FrequencyDomain/LowLevelMusicProcessor.o.d" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/armeabi-v7a/objs/FrequencyDomain/LowLevelMusicProcessor.o.d" afterPath="$PROJECT_DIR$/app/src/main/obj/local/armeabi-v7a/objs/FrequencyDomain/LowLevelMusicProcessor.o.d" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86/objs/FrequencyDomain/LowLevelMusicProcessor.o.d" afterPath="$PROJECT_DIR$/app/src/main/obj/local/x86/objs/FrequencyDomain/LowLevelMusicProcessor.o.d" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86_64/objs/FrequencyDomain/LowLevelMusicProcessor.o.d" afterPath="$PROJECT_DIR$/app/src/main/obj/local/x86_64/objs/FrequencyDomain/LowLevelMusicProcessor.o.d" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/Utils.cpp" afterPath="$PROJECT_DIR$/app/src/main/jni/Utils.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/Utils.h" afterPath="$PROJECT_DIR$/app/src/main/jni/Utils.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/arm64-v8a/objs/FrequencyDomain/Utils.o.d" afterPath="$PROJECT_DIR$/app/src/main/obj/local/arm64-v8a/objs/FrequencyDomain/Utils.o.d" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/armeabi-v7a/objs/FrequencyDomain/Utils.o.d" afterPath="$PROJECT_DIR$/app/src/main/obj/local/armeabi-v7a/objs/FrequencyDomain/Utils.o.d" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86/objs/FrequencyDomain/Utils.o.d" afterPath="$PROJECT_DIR$/app/src/main/obj/local/x86/objs/FrequencyDomain/Utils.o.d" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86_64/objs/FrequencyDomain/Utils.o.d" afterPath="$PROJECT_DIR$/app/src/main/obj/local/x86_64/objs/FrequencyDomain/Utils.o.d" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout/activity_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/drawable-hdpi-v4.json" afterPath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/drawable-hdpi-v4.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/drawable-mdpi-v4.json" afterPath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/drawable-mdpi-v4.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/drawable.json" afterPath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/drawable.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/layout.json" afterPath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/layout.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/jniLibs/debug/arm64-v8a/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/build/intermediates/jniLibs/debug/arm64-v8a/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/jniLibs/debug/armeabi-v7a/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/build/intermediates/jniLibs/debug/armeabi-v7a/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/jniLibs/debug/x86/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/build/intermediates/jniLibs/debug/x86/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/jniLibs/debug/x86_64/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/build/intermediates/jniLibs/debug/x86_64/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/mergeJniLibs/debug/folders/2000/1f/main/lib/arm64-v8a/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/mergeJniLibs/debug/folders/2000/1f/main/lib/arm64-v8a/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/mergeJniLibs/debug/folders/2000/1f/main/lib/armeabi-v7a/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/mergeJniLibs/debug/folders/2000/1f/main/lib/armeabi-v7a/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/mergeJniLibs/debug/folders/2000/1f/main/lib/x86/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/mergeJniLibs/debug/folders/2000/1f/main/lib/x86/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/mergeJniLibs/debug/folders/2000/1f/main/lib/x86_64/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/mergeJniLibs/debug/folders/2000/1f/main/lib/x86_64/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/libs/arm64-v8a/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/src/main/libs/arm64-v8a/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/libs/armeabi-v7a/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/src/main/libs/armeabi-v7a/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/libs/x86/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/src/main/libs/x86/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/libs/x86_64/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/src/main/libs/x86_64/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/arm64-v8a/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/src/main/obj/local/arm64-v8a/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/armeabi-v7a/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/src/main/obj/local/armeabi-v7a/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/src/main/obj/local/x86/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86_64/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/src/main/obj/local/x86_64/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi/values.json" afterPath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi/values.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/drawable-xhdpi-v4.json" afterPath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/drawable-xhdpi-v4.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="FrequencyDomain.iws" />
@@ -138,10 +86,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="65" column="40" selection-start-line="65" selection-start-column="40" selection-end-line="65" selection-end-column="40" />
-              <folding>
-                <element signature="e#3696#3916#0" expanded="true" />
-                <element signature="e#3915#3916#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -149,8 +94,8 @@
       <file leaf-file-name="LowLevelMusicProcessor.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/jni/LowLevelMusicProcessor.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.201373">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.20594966">
+              <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -1760,29 +1705,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="AndroidView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="FrequencyDomain" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="FrequencyDomain" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scratches">
-        <subPane />
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1887,6 +1809,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches">
+        <subPane />
+      </pane>
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -1897,6 +1822,26 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="AndroidView">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FrequencyDomain" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FrequencyDomain" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -2242,11 +2187,9 @@
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290461" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290461" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290461" sideWeight="0.49585405" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39978564" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2268,6 +2211,8 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290461" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -2299,10 +2244,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
-          <folding>
-            <element signature="e#3696#3916#0" expanded="true" />
-            <element signature="e#3915#3916#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2347,7 +2289,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2363,10 +2304,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#3696#3916#0" expanded="true" />
-            <element signature="e#3915#3916#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2381,7 +2319,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2389,7 +2326,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2397,7 +2333,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.812357">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2419,7 +2354,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.6666667">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2427,7 +2361,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.8691275">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2511,7 +2444,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-43.896553">
           <caret line="215" column="4" selection-start-line="215" selection-start-column="4" selection-end-line="215" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2533,7 +2465,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2541,7 +2472,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2549,7 +2479,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2557,7 +2486,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2565,7 +2493,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.5369127">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2589,7 +2516,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.1111112">
           <caret line="35" column="4" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2618,7 +2544,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.14416476">
           <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2702,17 +2627,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="65" column="40" selection-start-line="65" selection-start-column="40" selection-end-line="65" selection-end-column="40" />
-          <folding>
-            <element signature="e#3696#3916#0" expanded="true" />
-            <element signature="e#3915#3916#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/jni/LowLevelMusicProcessor.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.201373">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.20594966">
+          <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
           <folding />
         </state>
       </provider>
