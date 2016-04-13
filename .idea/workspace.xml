@@ -24,90 +24,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="efc43536-4060-43ee-bb33-60f03717915a" name="Default" comment="Fix of recording voice&#10;&#10;- Also code was refactored">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/jni/Utils.cpp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/jni/Utils.h" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/jni/FrequencyDomain.cpp" afterPath="$PROJECT_DIR$/app/src/main/jni/LowLevelMusicProcessor.cpp" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/jni/FrequencyDomain.h" afterPath="$PROJECT_DIR$/app/src/main/jni/LowLevelMusicProcessor.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/arm64-v8a/objs/FrequencyDomain/FrequencyDomain.o" afterPath="$PROJECT_DIR$/app/src/main/obj/local/arm64-v8a/objs/FrequencyDomain/FrequencyDomain.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/armeabi-v7a/objs/FrequencyDomain/FrequencyDomain.o" afterPath="$PROJECT_DIR$/app/src/main/obj/local/armeabi-v7a/objs/FrequencyDomain/FrequencyDomain.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86/objs/FrequencyDomain/FrequencyDomain.o" afterPath="$PROJECT_DIR$/app/src/main/obj/local/x86/objs/FrequencyDomain/FrequencyDomain.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86_64/objs/FrequencyDomain/FrequencyDomain.o" afterPath="$PROJECT_DIR$/app/src/main/obj/local/x86_64/objs/FrequencyDomain/FrequencyDomain.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/MainActivity$1.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/MainActivity$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/MainActivity$2.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/MainActivity$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/MainActivity$3.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/MainActivity$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/MainActivity$4.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/MainActivity$4.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/MainActivity.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/MainActivity.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/android/support/v7/appcompat/R$bool.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/android/support/v7/appcompat/R$bool.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$bool.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$bool.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/android/support/v7/appcompat/R$color.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/android/support/v7/appcompat/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$color.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/android/support/v7/appcompat/R$dimen.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/android/support/v7/appcompat/R$dimen.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$dimen.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$dimen.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/android/support/v7/appcompat/R$id.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/android/support/v7/appcompat/R$id.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$id.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$id.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/android/support/v7/appcompat/R$integer.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/android/support/v7/appcompat/R$integer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$integer.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$integer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$layout.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$layout.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$menu.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$menu.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$mipmap.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$mipmap.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/android/support/v7/appcompat/R$string.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/android/support/v7/appcompat/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$string.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/android/support/v7/appcompat/R$style.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/android/support/v7/appcompat/R$style.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$style.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$style.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$styleable.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R$styleable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/superpowered/frequencydomain/R.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/outputs/apk/app-debug-unaligned.apk" afterPath="$PROJECT_DIR$/app/build/outputs/apk/app-debug-unaligned.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/outputs/apk/app-debug.apk" afterPath="$PROJECT_DIR$/app/build/outputs/apk/app-debug.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/cache.properties.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dex/debug/folders/1000/1f/main/classes.dex" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dex/debug/folders/1000/1f/main/classes.dex" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-22.2.0_a36f58335a76fc887e164c0d52db66feab0e3c5a.jar" afterPath="$PROJECT_DIR$/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-22.2.0_a36f58335a76fc887e164c0d52db66feab0e3c5a.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-22.2.0_ba760fe4cba9aa41445cda6e57fe26e759e7d67c.jar" afterPath="$PROJECT_DIR$/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-22.2.0_ba760fe4cba9aa41445cda6e57fe26e759e7d67c.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/pre-dexed/debug/debug_657d86eb26aba772649bd911c8c4bf115291e3ba.jar" afterPath="$PROJECT_DIR$/app/build/intermediates/pre-dexed/debug/debug_657d86eb26aba772649bd911c8c4bf115291e3ba.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.0_3986c89d3169e915319677e16ca3f0dfd299c183.jar" afterPath="$PROJECT_DIR$/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.0_3986c89d3169e915319677e16ca3f0dfd299c183.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/outputFileStates.bin" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/outputFileStates.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/res/resources-debug-androidTest.ap_" afterPath="$PROJECT_DIR$/app/build/intermediates/res/resources-debug-androidTest.ap_" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/res/resources-debug.ap_" afterPath="$PROJECT_DIR$/app/build/intermediates/res/resources-debug.ap_" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0_4cd209d11745e07634670e92c818acc0c5dce89c.jar" afterPath="$PROJECT_DIR$/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0_4cd209d11745e07634670e92c818acc0c5dce89c.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/jni/Android.mk" afterPath="$PROJECT_DIR$/app/src/main/jni/Android.mk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/arm64-v8a/objs/FrequencyDomain/FrequencyDomain.o.d" afterPath="$PROJECT_DIR$/app/src/main/obj/local/arm64-v8a/objs/FrequencyDomain/FrequencyDomain.o.d" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/armeabi-v7a/objs/FrequencyDomain/FrequencyDomain.o.d" afterPath="$PROJECT_DIR$/app/src/main/obj/local/armeabi-v7a/objs/FrequencyDomain/FrequencyDomain.o.d" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86/objs/FrequencyDomain/FrequencyDomain.o.d" afterPath="$PROJECT_DIR$/app/src/main/obj/local/x86/objs/FrequencyDomain/FrequencyDomain.o.d" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86_64/objs/FrequencyDomain/FrequencyDomain.o.d" afterPath="$PROJECT_DIR$/app/src/main/obj/local/x86_64/objs/FrequencyDomain/FrequencyDomain.o.d" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/superpowered/frequencydomain/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/superpowered/frequencydomain/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/android/support/v7/appcompat/R.java" afterPath="$PROJECT_DIR$/app/build/generated/source/r/debug/android/support/v7/appcompat/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/superpowered/frequencydomain/R.java" afterPath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/superpowered/frequencydomain/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/symbols/debug/R.txt" afterPath="$PROJECT_DIR$/app/build/intermediates/symbols/debug/R.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/layout/activity_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/drawable-xhdpi-v4.json" afterPath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/drawable-xhdpi-v4.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/drawable.json" afterPath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/drawable.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/jniLibs/debug/arm64-v8a/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/build/intermediates/jniLibs/debug/arm64-v8a/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/jniLibs/debug/armeabi-v7a/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/build/intermediates/jniLibs/debug/armeabi-v7a/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/jniLibs/debug/x86/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/build/intermediates/jniLibs/debug/x86/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/jniLibs/debug/x86_64/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/build/intermediates/jniLibs/debug/x86_64/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/mergeJniLibs/debug/folders/2000/1f/main/lib/arm64-v8a/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/mergeJniLibs/debug/folders/2000/1f/main/lib/arm64-v8a/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/mergeJniLibs/debug/folders/2000/1f/main/lib/armeabi-v7a/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/mergeJniLibs/debug/folders/2000/1f/main/lib/armeabi-v7a/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/mergeJniLibs/debug/folders/2000/1f/main/lib/x86/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/mergeJniLibs/debug/folders/2000/1f/main/lib/x86/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/mergeJniLibs/debug/folders/2000/1f/main/lib/x86_64/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/mergeJniLibs/debug/folders/2000/1f/main/lib/x86_64/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/libs/arm64-v8a/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/src/main/libs/arm64-v8a/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/libs/armeabi-v7a/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/src/main/libs/armeabi-v7a/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/libs/x86/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/src/main/libs/x86/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/libs/x86_64/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/src/main/libs/x86_64/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/arm64-v8a/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/src/main/obj/local/arm64-v8a/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/armeabi-v7a/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/src/main/obj/local/armeabi-v7a/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/src/main/obj/local/x86/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/obj/local/x86_64/libFrequencyDomain.so" afterPath="$PROJECT_DIR$/app/src/main/obj/local/x86_64/libFrequencyDomain.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merger.xml" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merger.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi/values.json" afterPath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/multi/values.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values/values.xml" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values/values.xml" />
+    <list default="true" id="efc43536-4060-43ee-bb33-60f03717915a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="FrequencyDomain.iws" />
@@ -2152,6 +2069,13 @@
       <option name="number" value="Default" />
       <updated>1460042879686</updated>
     </task>
+    <task id="LOCAL-00001" summary="Fix of recording voice&#10;&#10;- Also code was refactored">
+      <created>1460545762865</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1460545762865</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TodoView">
