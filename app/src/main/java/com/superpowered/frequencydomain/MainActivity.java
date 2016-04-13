@@ -10,9 +10,11 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.ToggleButton;
 
 
 public class MainActivity extends Activity {
@@ -23,6 +25,7 @@ public class MainActivity extends Activity {
     private Button mStartRecordButton;
     private Button mPlaySongButton;
     private Button mSaveButton;
+    private ToggleButton mVoicePlaybackToggleButton;
     private SeekBar mSeekBar;
     private RadioGroup mRadioGroup;
 
@@ -101,6 +104,14 @@ public class MainActivity extends Activity {
             }
         });
 
+        mVoicePlaybackToggleButton = (ToggleButton) findViewById(R.id.voice_playback_toggle);
+        mVoicePlaybackToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ToggleVoicePlayback();
+            }
+        });
+
         mSeekBar = (SeekBar) findViewById(R.id.fx_fader);
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -149,6 +160,8 @@ public class MainActivity extends Activity {
     private native void SaveWithEffect();
 
     private native void TogglePlayer();
+
+    private native void ToggleVoicePlayback();
 
     private native void UpdateStatus();
 

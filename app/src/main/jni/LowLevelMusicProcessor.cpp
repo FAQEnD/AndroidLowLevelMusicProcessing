@@ -1,16 +1,12 @@
-#include <jni.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include "LowLevelMusicProcessor.h"
+
 #include "Superpowered/SuperpoweredFrequencyDomain.h"
 #include "Superpowered/SuperpoweredSimple.h"
 #include "Superpowered/SuperpoweredRecorder.h"
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_AndroidConfiguration.h>
 
-#include "LowLevelMusicProcessor.h"
 #include "Utils.h"
-
-static LowLevelMusicProcessor *lowLevelMusicProcessor;
 
 /**
  * LowLevelMusicProcessor init of static members
@@ -22,6 +18,7 @@ SuperpoweredAdvancedAudioPlayer *LowLevelMusicProcessor::sPlayer;
 char *LowLevelMusicProcessor::sLastRecordedFileName;
 float *LowLevelMusicProcessor::sStereoBuffer;
 FILE *LowLevelMusicProcessor::sFile;
+bool LowLevelMusicProcessor::sIsVoicePlaybackOn;
 
 SuperpoweredRoll *LowLevelMusicProcessor::sRoll;
 SuperpoweredFilter *LowLevelMusicProcessor::sFilter;
@@ -35,7 +32,7 @@ bool LowLevelMusicProcessor::recordAudioProcessing(void *clientdata, short int *
     fwrite(audioInput, sizeof(short int), numberOfSamples * CHANNELS_NUMBER, sFile);
     fflush(sFile);
 
-    return true;
+    return sIsVoicePlaybackOn;
 }
 
 bool LowLevelMusicProcessor::outputAudioProcessing(void *clientdata, short int *audioOutput,
@@ -75,6 +72,8 @@ LowLevelMusicProcessor::LowLevelMusicProcessor(int samplerate,
         mBufferSize(buffersize),
         mCurrentFX(CurrentFX::FLANGER),
         mIsRecording(false) {
+    sIsVoicePlaybackOn = true;
+
     mSavePath = new char [strlen(musicFolderPath) + strlen(SAVED_FILE_NAME) + 1];
     Utils::prepareSavePath(mSavePath, musicFolderPath);
 
@@ -145,15 +144,18 @@ void LowLevelMusicProcessor::saveWithEffect() {
         sLastRecordedFileName = new char[strlen(mSavePath) + SIZE_OF_FX_SUFFIX];
     }
     Utils::createFileName(mSavePath, sLastRecordedFileName, mCurrentFX);
-    copyToFile();
+    onFxValue(ON_SAVE_WITH_FX_VALUE);
+    copyToFile(mSavePath, sLastRecordedFileName, mSampleRate);
+    offAllFX();
 }
 
-void LowLevelMusicProcessor::copyToFile() {
-    FILE *sourceFile = fopen(mSavePath, "r");
-    FILE *resultFile = createWAV(sLastRecordedFileName, mSampleRate, CHANNELS_NUMBER);
+void LowLevelMusicProcessor::copyToFile(const char *sourcePath, const char *resultPath, int sampleRate) {
+    FILE *sourceFile = fopen(sourcePath, "r");
+    FILE *resultFile = createWAV(resultPath, sampleRate, CHANNELS_NUMBER);
 
     unsigned int n;
     unsigned int numberOfSamplesToProcess;
+
     short int *intBuffer = NULL;
 
     if (sourceFile == NULL) {
@@ -164,7 +166,6 @@ void LowLevelMusicProcessor::copyToFile() {
         LOGE("Can't open result file");
         return;
     }
-    onFxValue(ON_SAVE_WITH_FX_VALUE);
 
     // skip first 44 bites of WAV Header
     fseek(sourceFile, SIZE_OF_WAV_HEADER, SEEK_SET);
@@ -172,6 +173,7 @@ void LowLevelMusicProcessor::copyToFile() {
     if (intBuffer == NULL) {
         intBuffer = new short int[SAMPLE_RATE * CHANNELS_NUMBER];
     }
+
     while ((n = fread(intBuffer, sizeof(short int), SAMPLE_RATE, sourceFile)) > 0)
     {
         SuperpoweredShortIntToFloat(intBuffer, sStereoBuffer, SAMPLE_RATE);
@@ -190,7 +192,6 @@ void LowLevelMusicProcessor::copyToFile() {
     }
     delete []intBuffer;
     LOGD("Copy completed");
-    offAllFX();
 
     if (fclose(sourceFile) != 0) {
         LOGE("Error in closing source file");
@@ -219,6 +220,11 @@ void LowLevelMusicProcessor::togglePlayer() {
         LOGD("Play");
     }
     sPlayer->togglePlayback();
+}
+
+void LowLevelMusicProcessor::toggleVoicePlayback() {
+    LOGD("is voice playback on: %s", sIsVoicePlaybackOn ? "true" : "false");
+    sIsVoicePlaybackOn = !sIsVoicePlaybackOn;
 }
 
 void LowLevelMusicProcessor::updateStatus(JNIEnv *javaEnvironment, jobject self) {
@@ -317,105 +323,4 @@ LowLevelMusicProcessor::~LowLevelMusicProcessor() {
     delete []sLastRecordedFileName;
     delete []mSavePath;
     delete []sStereoBuffer;
-}
-
-// Ugly Java-native bridges - JNI, that is.
-extern "C" {
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_Init(
-        JNIEnv *javaEnvironment, jobject self, jlong samplerate, jlong buffersize, jstring path);
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_StartRecord(
-        JNIEnv *javaEnvironment, jobject self);
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_StopRecord(
-        JNIEnv *javaEnvironment, jobject self);
-
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_SaveWithEffect(
-        JNIEnv *javaEnvironment, jobject self);
-
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_TogglePlayer(
-        JNIEnv *javaEnvironment, jobject self);
-
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_UpdateStatus(
-        JNIEnv *javaEnvironment, jobject self);
-
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_OnFxSelect(
-        JNIEnv *javaEnvironment, jobject self, jint value);
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_OnFxValue(
-        JNIEnv *javaEnvironment, jobject self, jint value);
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_OnFxOff(
-        JNIEnv *javaEnvironment, jobject self);
-
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_Cleanup(
-        JNIEnv *javaEnvironment, jobject self);
-}
-
-/**
- * Initialization of JNI environment interface
- */
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_Init(
-        JNIEnv *javaEnvironment, jobject self, jlong samplerate, jlong buffersize, jstring path) {
-    const char *tempPath = javaEnvironment->GetStringUTFChars(path, 0);
-
-    lowLevelMusicProcessor = new LowLevelMusicProcessor(samplerate, buffersize, tempPath);
-
-    javaEnvironment->ReleaseStringUTFChars(path, tempPath);
-}
-
-/**
- * Recording interface
- */
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_StartRecord(
-        JNIEnv *javaEnvironment, jobject self) {
-    lowLevelMusicProcessor->startRecording();
-}
-
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_StopRecord(
-        JNIEnv *javaEnvironment, jobject self) {
-    lowLevelMusicProcessor->stopRecording();
-}
-
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_SaveWithEffect(
-        JNIEnv *javaEnvironment, jobject self) {
-    lowLevelMusicProcessor->saveWithEffect();
-}
-
-/**
- * Player interface
- */
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_TogglePlayer(
-        JNIEnv *javaEnvironment, jobject self) {
-    lowLevelMusicProcessor->togglePlayer();
-}
-
-/**
- * UI update interface
- */
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_UpdateStatus(
-        JNIEnv *javaEnvironment, jobject self) {
-    lowLevelMusicProcessor->updateStatus(javaEnvironment, self);
-}
-
-/**
- * FX effects interface
- */
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_OnFxSelect(
-        JNIEnv *javaEnvironment, jobject self, jint value) {
-    lowLevelMusicProcessor->onFxSelect(value);
-}
-
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_OnFxValue(
-        JNIEnv *javaEnvironment, jobject self, jint value) {
-    lowLevelMusicProcessor->onFxValue(value);
-}
-
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_OnFxOff(
-        JNIEnv *javaEnvironment, jobject self) {
-    lowLevelMusicProcessor->onFxOff();
-}
-
-/**
- * Clean JNI resources interface
- */
-JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_Cleanup(
-        JNIEnv *javaEnvironment, jobject self) {
-    delete lowLevelMusicProcessor;
 }

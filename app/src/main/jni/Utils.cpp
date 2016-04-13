@@ -1,13 +1,12 @@
 //
 // Created by antonsmusiienko on 13.04.16.
 //
+#include "Utils.h"
+
 #include <math.h>
 #include <jni.h>
 #include <stdlib.h>
 #include <stdio.h>
-
-#include "Utils.h"
-
 float Utils::floatToFrequency(float value) {
     if (value > 0.97f) return MAXFREQ;
     if (value < 0.03f) return MINFREQ;

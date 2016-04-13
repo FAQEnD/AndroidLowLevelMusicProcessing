@@ -17,4 +17,5 @@
     <string name="play_song_text">Playing of recorded audio:</string>
     <string name="audio_effects_text">Some Audio Effects:</string>
     <string name="save_with_effect_text">Save audio with selected effect</string>
+    <string name="voice_playback_toggle_text">Voice playback:</string>
 </resources>

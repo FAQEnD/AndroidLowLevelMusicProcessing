@@ -6,6 +6,9 @@
 #define FREQUENCYDOMAIN_FREQUENCYDOMAIN_H
 
 #include <android/log.h>
+#include <jni.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #include "Superpowered/SuperpoweredAndroidAudioIO.h"
 #include "Superpowered/SuperpoweredAdvancedAudioPlayer.h"
@@ -47,6 +50,7 @@ private:
     static char *sLastRecordedFileName;
     static float *sStereoBuffer;
     static FILE *sFile;
+    static bool sIsVoicePlaybackOn;
 
     // FX effects
     static SuperpoweredRoll *sRoll;
@@ -84,9 +88,11 @@ public:
 
     void saveWithEffect();
 
-    void copyToFile();
+    void copyToFile(const char *sourcePath, const char *resultPath, int sampleRate);
 
     void togglePlayer();
+
+    void toggleVoicePlayback();
 
     // UI Update on Java side
     void updateStatus(JNIEnv *javaEnvironment, jobject self);
