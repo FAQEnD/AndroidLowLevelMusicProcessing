@@ -12,39 +12,39 @@
         android:id="@+id/control_record_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/recording_text"
+        android:text="@string/start_record"
+        android:layout_below="@+id/playing_song_text"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/recording_text"
-        android:layout_alignTop="@+id/control_song_play_button"
-        android:text="@string/start_record" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/control_song_play_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/fx_fader"
-        android:layout_alignLeft="@+id/playing_song_text"
-        android:layout_alignRight="@+id/fx_fader"
-        android:layout_alignStart="@+id/playing_song_text"
+        android:text="@string/play_song"
         android:layout_below="@+id/playing_song_text"
-        android:text="@string/play_song" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:id="@+id/save_with_effect_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/save_with_effect_text"
-        android:layout_centerHorizontal="true"
-        android:text="@string/save_button" />
+        android:text="@string/save_button"
+        android:layout_below="@+id/fx_fader"
+        android:layout_centerHorizontal="true" />
 
     <RadioGroup
         android:id="@+id/fx_effects_radio_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="164dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <RadioButton
             android:id="@+id/radio_flanger"
@@ -88,80 +88,84 @@
         android:id="@+id/fx_fader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fx_effects_radio_group"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/save_with_effect_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/recording_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/recording_text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_above="@+id/control_record_button"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/save_with_effect_button"
-        android:layout_toStartOf="@+id/save_with_effect_button"
-        android:gravity="center"
-        android:text="@string/recording_text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_alignRight="@+id/control_record_button"
+        android:layout_alignEnd="@+id/control_record_button"
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:id="@+id/playing_song_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/save_with_effect_button"
-        android:layout_toRightOf="@+id/save_with_effect_button"
         android:gravity="center"
         android:text="@string/play_song_text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/control_song_play_button"
+        android:layout_alignStart="@+id/control_song_play_button" />
 
     <TextView
         android:id="@+id/some_effects_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/fx_effects_radio_group"
-        android:layout_alignEnd="@+id/fx_effects_radio_group"
-        android:layout_alignLeft="@+id/fx_effects_radio_group"
-        android:layout_alignRight="@+id/fx_effects_radio_group"
-        android:layout_alignStart="@+id/fx_effects_radio_group"
         android:gravity="center"
         android:text="@string/audio_effects_text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginBottom="31dp"
+        android:layout_alignBottom="@+id/fx_effects_radio_group"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/save_with_effect_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fx_fader"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="59dp"
         android:gravity="center"
         android:text="@string/save_with_effect_text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/some_effects_text"
+        android:layout_centerHorizontal="true" />
 
     <ToggleButton
         android:id="@+id/voice_playback_toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:checked="true"
         android:layout_above="@+id/some_effects_text"
-        android:layout_toEndOf="@+id/control_record_button"
-        android:layout_toLeftOf="@+id/control_song_play_button"
         android:layout_toRightOf="@+id/control_record_button"
-        android:checked="true" />
+        android:layout_toLeftOf="@+id/control_song_play_button"
+        android:layout_toStartOf="@+id/control_song_play_button" />
 
     <TextView
         android:id="@+id/voice_playback_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/voice_playback_toggle"
-        android:layout_alignEnd="@+id/voice_playback_toggle"
-        android:layout_alignLeft="@+id/voice_playback_toggle"
-        android:layout_alignRight="@+id/voice_playback_toggle"
-        android:layout_alignStart="@+id/voice_playback_toggle"
-        android:layout_below="@+id/control_record_button"
         android:gravity="center_horizontal|bottom"
         android:text="@string/voice_playback_toggle_text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_above="@+id/voice_playback_toggle"
+        android:layout_alignRight="@+id/voice_playback_toggle"
+        android:layout_alignEnd="@+id/voice_playback_toggle"
+        android:layout_alignLeft="@+id/voice_playback_toggle"
+        android:layout_alignStart="@+id/voice_playback_toggle" />
 
 </RelativeLayout>

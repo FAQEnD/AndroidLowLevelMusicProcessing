@@ -15,32 +15,93 @@
  */
 SuperpoweredAndroidAudioIO *LowLevelMusicProcessor::sAudioInput;
 SuperpoweredAndroidAudioIO *LowLevelMusicProcessor::sAudioOutput;
-SuperpoweredAdvancedAudioPlayer *LowLevelMusicProcessor::sPlayer;
+SuperpoweredAdvancedAudioPlayer *LowLevelMusicProcessor::sVoicePlayer;
+SuperpoweredAdvancedAudioPlayer *LowLevelMusicProcessor::sSongPlayer;
 
 char *LowLevelMusicProcessor::sLastRecordedFileName;
-float *LowLevelMusicProcessor::sStereoBuffer;
+float *LowLevelMusicProcessor::sFirstBuffer;
+float *LowLevelMusicProcessor::sSecondBuffer;
+float *LowLevelMusicProcessor::sFinalBuffer;
 FILE *LowLevelMusicProcessor::sFile;
 bool LowLevelMusicProcessor::sIsVoicePlaybackOn;
+bool LowLevelMusicProcessor::sIsAudioOutputSamplesCalculated;
+bool LowLevelMusicProcessor::sIsSavedWithFX;
+bool LowLevelMusicProcessor::sIsDefaultFlowOn;
+int LowLevelMusicProcessor::sNumberOfSamplesAudioOutput;
 
 bool LowLevelMusicProcessor::recordAudioProcessing(void *clientdata, short int *audioInput,
                                   int numberOfSamples, int samplerate) {
+    if (sSongPlayer->process(sFirstBuffer, false, numberOfSamples, SONG_VOLUME)) {
+        if (sIsVoicePlaybackOn) {
+            SuperpoweredShortIntToFloat(audioInput, sSecondBuffer, numberOfSamples);
+            SuperpoweredCrossMono(sFirstBuffer, sSecondBuffer, sFinalBuffer,
+                                  DEFAULT_GAIN, DEFAULT_GAIN,
+                                  DEFAULT_GAIN, DEFAULT_GAIN,
+                                  numberOfSamples * 2);
+        }
+        if (!SuperpoweredHasNonFinite(sIsVoicePlaybackOn ?
+                                      sFinalBuffer : sFirstBuffer,
+                                      numberOfSamples)) {
+            if (sIsDefaultFlowOn) {
+                fwrite(audioInput, sizeof(short int), numberOfSamples * CHANNELS_NUMBER, sFile);
+            } else {
+                SuperpoweredFloatToShortInt(sFinalBuffer, audioInput, numberOfSamples);
+                fwrite(audioInput, sizeof(short int), numberOfSamples * CHANNELS_NUMBER, sFile);
+            }
+            // outputting of song and voice or only song
+            SuperpoweredFloatToShortInt(sIsVoicePlaybackOn ?
+                                        sFinalBuffer : sFirstBuffer,
+                                        audioInput, numberOfSamples);
+        }
 
-    fwrite(audioInput, sizeof(short int), numberOfSamples * CHANNELS_NUMBER, sFile);
-    fflush(sFile);
-
-    return sIsVoicePlaybackOn;
+        return true;
+    }
+    else return false;
 }
 
 bool LowLevelMusicProcessor::outputAudioProcessing(void *clientdata, short int *audioOutput,
                                                    int numberOfSamples,
                                                    int samplerate) {
-    if (sPlayer->process(sStereoBuffer, false, numberOfSamples)) {
-
-        FXManager::processAllFX(sStereoBuffer, numberOfSamples);
-
-        SuperpoweredFloatToShortInt(sStereoBuffer, audioOutput, numberOfSamples);
+    // optimization, it helps us to calculate only once
+    if (!sIsAudioOutputSamplesCalculated) {
+        sNumberOfSamplesAudioOutput = numberOfSamples * 2;
+        sIsAudioOutputSamplesCalculated = true;
+    }
+    if (sVoicePlayer->process(sFirstBuffer, false, numberOfSamples)) {
+        if (sSongPlayer->playing) {
+            if (sSongPlayer->process(sSecondBuffer, false, numberOfSamples, SONG_VOLUME)) {
+                SuperpoweredCrossMono(sFirstBuffer, sSecondBuffer, sFinalBuffer,
+                                      DEFAULT_GAIN, DEFAULT_GAIN,
+                                      DEFAULT_GAIN, DEFAULT_GAIN,
+                                      sNumberOfSamplesAudioOutput);
+                /**
+                 * if voice saved with some FX, then process song buffer,
+                 * else process two buffers (voice and song)
+                 */
+                FXManager::processAllFX(sIsSavedWithFX ? sSecondBuffer : sFinalBuffer, numberOfSamples);
+                LOGD("is saved with FX: %d", sIsSavedWithFX ? 1 : 0);
+            } else {
+                return false;
+            }
+        } else {
+            if (!sIsSavedWithFX) {
+                // if voice doesn't saved with some FX and song doesn't playing, then process only voice
+                FXManager::processAllFX(sFirstBuffer, numberOfSamples);
+            }
+        }
+        if (!sIsDefaultFlowOn) {
+            SuperpoweredFloatToShortInt(sSongPlayer->playing ?
+                                        sFinalBuffer : sFirstBuffer,
+                                        audioOutput, numberOfSamples);
+        } else {
+            SuperpoweredFloatToShortInt(sSongPlayer->playing ?
+                                        sFinalBuffer : sFirstBuffer,
+                                        audioOutput, numberOfSamples);
+        }
         return true;
-    } else return false;
+    } else {
+        return false;
+    }
 }
 
 void LowLevelMusicProcessor::audioPlayEvents(void *clientData,
@@ -63,23 +124,32 @@ void LowLevelMusicProcessor::audioPlayEvents(void *clientData,
 
 LowLevelMusicProcessor::LowLevelMusicProcessor(int samplerate,
                                                int buffersize,
-                                               const char *musicFolderPath):
+                                               const char *musicFolderPath,
+                                               bool isDefaultFlowOn):
         mSampleRate(samplerate),
         mBufferSize(buffersize),
         mIsRecording(false) {
+    sIsDefaultFlowOn = isDefaultFlowOn;
+    LOGD(sIsDefaultFlowOn ? "on" : "off");
     sIsVoicePlaybackOn = true;
+    sIsAudioOutputSamplesCalculated = false;
+    sIsSavedWithFX = false;
 
     mSavePath = new char [strlen(musicFolderPath) + strlen(SAVED_FILE_NAME) + 1];
-    Utils::prepareSavePath(mSavePath, musicFolderPath);
+    mSongPath = new char [strlen(musicFolderPath) + strlen(SONG_FILE_NAME) + 1];
+    Utils::prepareNewPath(mSavePath, musicFolderPath, SAVED_FILE_NAME);
+    Utils::prepareNewPath(mSongPath, musicFolderPath, SONG_FILE_NAME);
 
-    sStereoBuffer = new float [CHANNELS_NUMBER * mBufferSize + 128];
+    sFirstBuffer = new float [CHANNELS_NUMBER * mBufferSize + 128];
+    sSecondBuffer = new float [CHANNELS_NUMBER * mBufferSize + 128];
+    sFinalBuffer = new float [CHANNELS_NUMBER * mBufferSize + 128];
 
     sAudioInput = new SuperpoweredAndroidAudioIO(mSampleRate, mBufferSize, true, true,
-                                                recordAudioProcessing,
-                                                NULL,
-                                                -1,
-                                                -1,
-                                                mBufferSize * CHANNELS_NUMBER * 2);
+                                                 recordAudioProcessing,
+                                                 NULL,
+                                                 -1,
+                                                 -1,
+                                                 mBufferSize * CHANNELS_NUMBER);
     sAudioInput->stop();
 
     sAudioOutput = new SuperpoweredAndroidAudioIO(mSampleRate, mBufferSize, false, true,
@@ -90,18 +160,23 @@ LowLevelMusicProcessor::LowLevelMusicProcessor(int samplerate,
                                                   mBufferSize * CHANNELS_NUMBER);
     sAudioOutput->stop();
 
-    sPlayer = new SuperpoweredAdvancedAudioPlayer(NULL, audioPlayEvents, mSampleRate, 0);
+    sVoicePlayer = new SuperpoweredAdvancedAudioPlayer(NULL, audioPlayEvents, mSampleRate, 0);
+    sSongPlayer = new SuperpoweredAdvancedAudioPlayer(NULL, audioPlayEvents, mSampleRate, 0);
 
     mFXManager = new FXManager(mSampleRate);
 }
 
 void LowLevelMusicProcessor::startRecording() {
     LOGD("Start recording");
-    if (sPlayer->playing) {
+    if (sVoicePlayer->playing) {
         togglePlayer();
     }
     if (!mIsRecording) {
         sFile = createWAV(mSavePath, mSampleRate, CHANNELS_NUMBER);
+
+        sSongPlayer->open(mSongPath);
+        sSongPlayer->togglePlayback();
+
         sAudioInput->start();
         mIsRecording = true;
     } else {
@@ -113,19 +188,21 @@ void LowLevelMusicProcessor::stopRecording() {
     LOGD("Stop recording");
     if (mIsRecording) {
         sAudioInput->stop();
+        sSongPlayer->pause();
         closeWAV(sFile);
         if (fclose(sFile) != 0) {
-            LOGE("Error in closing save_record_fwrite.wav");
+            LOGE("Error in closing %s", mSavePath);
         }
-        sPlayer->open(mSavePath);
+        sVoicePlayer->open(mSavePath);
         mIsRecording = false;
+        sIsSavedWithFX = false;
     } else {
         LOGD("already stopped");
     }
 }
 
 void LowLevelMusicProcessor::saveWithEffect() {
-    if (sPlayer->playing) {
+    if (sVoicePlayer->playing) {
         togglePlayer();
     }
     if (mIsRecording) {
@@ -138,9 +215,12 @@ void LowLevelMusicProcessor::saveWithEffect() {
     mFXManager->onFxValue(ON_SAVE_WITH_FX_VALUE);
     copyToFile(mSavePath, sLastRecordedFileName, mSampleRate);
     mFXManager->offAllFX();
+    sIsSavedWithFX = true;
+    LOGD("Save with effects completed");
 }
 
 void LowLevelMusicProcessor::copyToFile(const char *sourcePath, const char *resultPath, int sampleRate) {
+    LOGD("source path: %s, result path: %s", sourcePath, resultPath);
     FILE *sourceFile = fopen(sourcePath, "r");
     FILE *resultFile = createWAV(resultPath, sampleRate, CHANNELS_NUMBER);
 
@@ -157,23 +237,18 @@ void LowLevelMusicProcessor::copyToFile(const char *sourcePath, const char *resu
         LOGE("Can't open result file");
         return;
     }
-
     // skip first 44 bites of WAV Header
     fseek(sourceFile, SIZE_OF_WAV_HEADER, SEEK_SET);
-
     if (intBuffer == NULL) {
         intBuffer = new short int[SAMPLE_RATE * CHANNELS_NUMBER];
     }
 
     while ((n = fread(intBuffer, sizeof(short int), SAMPLE_RATE, sourceFile)) > 0)
     {
-        SuperpoweredShortIntToFloat(intBuffer, sStereoBuffer, SAMPLE_RATE);
-
+        SuperpoweredShortIntToFloat(intBuffer, sFirstBuffer, SAMPLE_RATE);
         numberOfSamplesToProcess = n / 2;
-        FXManager::processAllFX(sStereoBuffer, numberOfSamplesToProcess);
-
-        SuperpoweredFloatToShortInt(sStereoBuffer, intBuffer, SAMPLE_RATE);
-
+        FXManager::processAllFX(sFirstBuffer, numberOfSamplesToProcess);
+        SuperpoweredFloatToShortInt(sFirstBuffer, intBuffer, SAMPLE_RATE);
         if (fwrite(intBuffer, sizeof(short int), n, resultFile) != n) {
             LOGE("Error in file copying");
             return;
@@ -198,19 +273,43 @@ void LowLevelMusicProcessor::togglePlayer() {
     if (mIsRecording) {
         stopRecording();
     }
-    if (sPlayer->playing) {
+    if (sVoicePlayer->playing || sSongPlayer->playing) {
         sAudioOutput->stop();
-        LOGD("Pause");
+        sVoicePlayer->pause();
+        sSongPlayer->pause();
+        LOGD("Stop");
+        return;
     } else {
-        if (sLastRecordedFileName == NULL) {
-            sPlayer->open(mSavePath);
+        if (sIsDefaultFlowOn) {
+            chooseCorrectPath();
+            sSongPlayer->open(mSongPath);
+            sVoicePlayer->play(false);
+            sSongPlayer->play(false);
+            LOGD("Default flow on");
         } else {
-            sPlayer->open(sLastRecordedFileName);
+            chooseCorrectPath();
+            sVoicePlayer->play(false);
+            LOGD("Default flow off");
         }
         sAudioOutput->start();
         LOGD("Play");
     }
-    sPlayer->togglePlayback();
+}
+
+void LowLevelMusicProcessor::chooseCorrectPath() {
+    if (sIsSavedWithFX) {
+        if (sLastRecordedFileName != NULL) {
+            sVoicePlayer->open(sLastRecordedFileName);
+        } else {
+            LOGE("last recorded file name == NULL");
+        }
+    } else {
+        if (mSavePath != NULL) {
+            sVoicePlayer->open(mSavePath);
+        } else {
+            LOGE("save path == NULL");
+        }
+    }
 }
 
 void LowLevelMusicProcessor::toggleVoicePlayback() {
@@ -220,12 +319,12 @@ void LowLevelMusicProcessor::toggleVoicePlayback() {
 
 void LowLevelMusicProcessor::updateStatus(JNIEnv *javaEnvironment, jobject self) {
     jclass thisClass = javaEnvironment->GetObjectClass(self);
-    Utils::setBoolField(javaEnvironment, self, thisClass, "isPlaying", sPlayer->playing);
+    Utils::setBoolField(javaEnvironment, self, thisClass, "isPlaying", sVoicePlayer->playing);
     Utils::setBoolField(javaEnvironment, self, thisClass, "isRecording", mIsRecording);
 }
 
-void LowLevelMusicProcessor::setFX(int value) {
-    mFXManager->setFxValue(value);
+void LowLevelMusicProcessor::setTypeFX(int value) {
+    mFXManager->setFxType(value);
 }
 
 void LowLevelMusicProcessor::onFX(int value) {
@@ -240,11 +339,15 @@ LowLevelMusicProcessor::~LowLevelMusicProcessor() {
     // clear AudioIO, player and recorder pointers
     delete sAudioInput;
     delete sAudioOutput;
-    delete sPlayer;
+    delete sVoicePlayer;
+    delete sSongPlayer;
     delete mFXManager;
 
     // clear resources
     delete []sLastRecordedFileName;
     delete []mSavePath;
-    delete []sStereoBuffer;
+    delete []mSongPath;
+    delete []sFirstBuffer;
+    delete []sSecondBuffer;
+    delete []sFinalBuffer;
 }

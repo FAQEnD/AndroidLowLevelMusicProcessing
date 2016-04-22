@@ -6,10 +6,15 @@
  * Initialization of JNI environment interface
  */
 JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_Init(
-        JNIEnv *javaEnvironment, jobject self, jlong samplerate, jlong buffersize, jstring path) {
+        JNIEnv *javaEnvironment,
+        jobject self,
+        jlong samplerate,
+        jlong buffersize,
+        jstring path,
+        jboolean isDefaultFlowOn) {
     const char *tempPath = javaEnvironment->GetStringUTFChars(path, 0);
 
-    lowLevelMusicProcessor = new LowLevelMusicProcessor(samplerate, buffersize, tempPath);
+    lowLevelMusicProcessor = new LowLevelMusicProcessor(samplerate, buffersize, tempPath, isDefaultFlowOn);
 
     javaEnvironment->ReleaseStringUTFChars(path, tempPath);
 }
@@ -58,7 +63,7 @@ JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_UpdateStatus(
  */
 JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_OnFxSelect(
         JNIEnv *javaEnvironment, jobject self, jint value) {
-    lowLevelMusicProcessor->setFX(value);
+    lowLevelMusicProcessor->setTypeFX(value);
 }
 
 JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_OnFxValue(

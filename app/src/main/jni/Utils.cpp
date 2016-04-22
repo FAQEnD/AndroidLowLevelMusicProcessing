@@ -30,10 +30,10 @@ void Utils::createFileName(const char *fileNameFrom,
     LOGD("Str len: %d, original std len: %d", strlen(fileNameTo), fileNameFromStrLength);
 }
 
-void Utils::prepareSavePath(char *savePath, const char *musicFolderPath) {
-    strcpy(savePath, musicFolderPath);
-    strcat(savePath, SAVED_FILE_NAME);
-    LOGD("current save path: %s", savePath);
+void Utils::prepareNewPath(char *newPath, const char *musicFolderPath, const char *SUFFIX_TO_ADD) {
+    strcpy(newPath, musicFolderPath);
+    strcat(newPath, SUFFIX_TO_ADD);
+    LOGD("new path: %s", newPath);
 }
 
 void Utils::setBoolField(JNIEnv *javaEnvironment,

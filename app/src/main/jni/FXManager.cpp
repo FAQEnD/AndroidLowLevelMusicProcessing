@@ -24,7 +24,7 @@ FXManager::FXManager(int sampleRate): mCurrentFX(CurrentFX::FLANGER) {
     sReverb = new SuperpoweredReverb(sampleRate);
 }
 
-void FXManager::setFxValue(int value) {
+void FXManager::setFxType(int value) {
     mCurrentFX = (CurrentFX) value;
     LOGD("CurrentFX: %d", mCurrentFX);
 }
@@ -35,7 +35,7 @@ FXManager::CurrentFX FXManager::getFxValue() {
 
 void FXManager::onFxValue(int iValue) {
     float value = (float) iValue * 0.01f;
-    // TODO: need to decrease calls of offAllFX() method
+    // TODO: investigate how to to decrease calls of offAllFX() method
     offAllFX();
 
     switch (mCurrentFX) {

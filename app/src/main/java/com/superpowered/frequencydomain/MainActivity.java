@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
     private ToggleButton mVoicePlaybackToggleButton;
     private SeekBar mSeekBar;
     private RadioGroup mRadioGroup;
+    private boolean mIsDefaultFlowOn;
 
     private Handler mHandler;
 
@@ -44,6 +45,11 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initUI();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            mIsDefaultFlowOn = extras.getBoolean(SplashActivity.FLOW_TYPE);
+            Log.d(TAG, "is default flow on: " + String.valueOf(mIsDefaultFlowOn));
+        }
 
         // Get the device's sample rate and buffer size to enable low-latency Android audio output, if available.
         String samplerateString = null, buffersizeString = null;
@@ -59,7 +65,7 @@ public class MainActivity extends Activity {
         Log.d(TAG, path);
         System.loadLibrary("FrequencyDomain");
 
-        Init(Integer.parseInt(samplerateString), Integer.parseInt(buffersizeString), path);
+        Init(Integer.parseInt(samplerateString), Integer.parseInt(buffersizeString), path, mIsDefaultFlowOn);
     }
 
     private void initUI() {
@@ -151,7 +157,7 @@ public class MainActivity extends Activity {
         Cleanup();
     }
 
-    private native void Init(long samplerate, long buffersize, String path);
+    private native void Init(long samplerate, long buffersize, String path, boolean isDefaultFlowOn);
 
     private native void StartRecord();
 

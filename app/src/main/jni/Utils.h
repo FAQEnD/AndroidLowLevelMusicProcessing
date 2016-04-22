@@ -20,7 +20,7 @@ public:
 
     static void createFileName(const char *fileNameFrom, char *fileNameTo, FXManager::CurrentFX currentFX);
 
-    static void prepareSavePath(char *savePath, const char *musicFolderPath);
+    static void prepareNewPath(char *savePath, const char *musicFolderPath, const char *SUFFIX_TO_ADD);
 
     static void setBoolField(JNIEnv *javaEnvironment,
                                     jobject self,

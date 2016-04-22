@@ -41,7 +41,7 @@ public:
     FXManager(int sampleRate);
 
     // Audio FX
-    void setFxValue(int value);
+    void setFxType(int value);
 
     CurrentFX getFxValue();
 

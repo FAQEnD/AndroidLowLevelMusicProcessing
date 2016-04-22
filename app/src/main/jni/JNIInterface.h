@@ -11,7 +11,12 @@ static LowLevelMusicProcessor *lowLevelMusicProcessor;
 // Ugly Java-native bridges - JNI, that is.
 extern "C" {
 JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_Init(
-        JNIEnv *javaEnvironment, jobject self, jlong samplerate, jlong buffersize, jstring path);
+        JNIEnv *javaEnvironment,
+        jobject self,
+        jlong samplerate,
+        jlong buffersize,
+        jstring path,
+        jboolean isDefaultFlowOn);
 JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_StartRecord(
         JNIEnv *javaEnvironment, jobject self);
 JNIEXPORT void Java_com_superpowered_frequencydomain_MainActivity_StopRecord(

@@ -13,9 +13,11 @@
     <string name="fx_effects_echo_radio">ECHO</string>
     <string name="fx_effects_reverb_radio">REVERB</string>
     <string name="save_button">Save</string>
-    <string name="recording_text">Recording of voice:</string>
-    <string name="play_song_text">Playing of recorded audio:</string>
-    <string name="audio_effects_text">Some Audio Effects:</string>
+    <string name="recording_text">Recording</string>
+    <string name="play_song_text">Playback</string>
+    <string name="audio_effects_text">Some Audio Effects</string>
     <string name="save_with_effect_text">Save audio with selected effect</string>
-    <string name="voice_playback_toggle_text">Voice playback:</string>
+    <string name="voice_playback_toggle_text">Voice playback</string>
+    <string name="splash_default_flow_text">Default flow</string>
+    <string name="splash_additional_flow_text">Additional flow</string>
 </resources>
