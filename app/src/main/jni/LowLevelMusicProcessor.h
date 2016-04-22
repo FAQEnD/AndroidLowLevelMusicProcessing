@@ -28,7 +28,7 @@ static const float SONG_VOLUME = 0.2f;
 static const float DEFAULT_GAIN = 1.0f;
 
 static const char *SAVED_FILE_NAME = "/saved_record.wav";
-static const char *SONG_FILE_NAME = "/System Of A Down-Toxicity.mp3";
+static const char *SONG_FILE_NAME = "/i_want_to_break_free.mp3";
 
 class LowLevelMusicProcessor {
 

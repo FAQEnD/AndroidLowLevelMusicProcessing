@@ -32,29 +32,24 @@ int LowLevelMusicProcessor::sNumberOfSamplesAudioOutput;
 bool LowLevelMusicProcessor::recordAudioProcessing(void *clientdata, short int *audioInput,
                                   int numberOfSamples, int samplerate) {
     if (sSongPlayer->process(sFirstBuffer, false, numberOfSamples, SONG_VOLUME)) {
-        if (sIsVoicePlaybackOn) {
-            SuperpoweredShortIntToFloat(audioInput, sSecondBuffer, numberOfSamples);
-            SuperpoweredCrossMono(sFirstBuffer, sSecondBuffer, sFinalBuffer,
-                                  DEFAULT_GAIN, DEFAULT_GAIN,
-                                  DEFAULT_GAIN, DEFAULT_GAIN,
-                                  numberOfSamples * 2);
-        }
-        if (!SuperpoweredHasNonFinite(sIsVoicePlaybackOn ?
-                                      sFinalBuffer : sFirstBuffer,
-                                      numberOfSamples)) {
-            if (sIsDefaultFlowOn) {
-                fwrite(audioInput, sizeof(short int), numberOfSamples * CHANNELS_NUMBER, sFile);
-            } else {
-                SuperpoweredFloatToShortInt(sFinalBuffer, audioInput, numberOfSamples);
-                fwrite(audioInput, sizeof(short int), numberOfSamples * CHANNELS_NUMBER, sFile);
-            }
-            // outputting of song and voice or only song
-            SuperpoweredFloatToShortInt(sIsVoicePlaybackOn ?
-                                        sFinalBuffer : sFirstBuffer,
-                                        audioInput, numberOfSamples);
-        }
+        SuperpoweredShortIntToFloat(audioInput, sSecondBuffer, numberOfSamples);
+        SuperpoweredCrossMono(sFirstBuffer, sSecondBuffer, sFinalBuffer,
+                              DEFAULT_GAIN, DEFAULT_GAIN,
+                              DEFAULT_GAIN, DEFAULT_GAIN,
+                              numberOfSamples * 2);
 
-        return true;
+        if (sIsDefaultFlowOn) {
+            fwrite(audioInput, sizeof(short int), numberOfSamples * CHANNELS_NUMBER, sFile);
+        } else {
+            SuperpoweredFloatToShortInt(sFinalBuffer, audioInput, numberOfSamples);
+            fwrite(audioInput, sizeof(short int), numberOfSamples * CHANNELS_NUMBER, sFile);
+        }
+        // outputting of song and voice or only song
+        SuperpoweredFloatToShortInt(sIsVoicePlaybackOn ?
+                                    sFinalBuffer : sFirstBuffer,
+                                    audioInput, numberOfSamples);
+
+    return true;
     }
     else return false;
 }
@@ -70,34 +65,27 @@ bool LowLevelMusicProcessor::outputAudioProcessing(void *clientdata, short int *
     if (sVoicePlayer->process(sFirstBuffer, false, numberOfSamples)) {
         if (sSongPlayer->playing) {
             if (sSongPlayer->process(sSecondBuffer, false, numberOfSamples, SONG_VOLUME)) {
-                SuperpoweredCrossMono(sFirstBuffer, sSecondBuffer, sFinalBuffer,
-                                      DEFAULT_GAIN, DEFAULT_GAIN,
-                                      DEFAULT_GAIN, DEFAULT_GAIN,
-                                      sNumberOfSamplesAudioOutput);
                 /**
                  * if voice saved with some FX, then process song buffer,
                  * else process two buffers (voice and song)
                  */
-                FXManager::processAllFX(sIsSavedWithFX ? sSecondBuffer : sFinalBuffer, numberOfSamples);
-                LOGD("is saved with FX: %d", sIsSavedWithFX ? 1 : 0);
+                if (sIsDefaultFlowOn) {
+                    SuperpoweredCrossMono(sFirstBuffer, sSecondBuffer, sFinalBuffer,
+                                          DEFAULT_GAIN, DEFAULT_GAIN,
+                                          DEFAULT_GAIN, DEFAULT_GAIN,
+                                          sNumberOfSamplesAudioOutput);
+                    FXManager::processAllFX(sFinalBuffer, numberOfSamples);
+                }
             } else {
                 return false;
             }
         } else {
-            if (!sIsSavedWithFX) {
                 // if voice doesn't saved with some FX and song doesn't playing, then process only voice
                 FXManager::processAllFX(sFirstBuffer, numberOfSamples);
-            }
         }
-        if (!sIsDefaultFlowOn) {
-            SuperpoweredFloatToShortInt(sSongPlayer->playing ?
-                                        sFinalBuffer : sFirstBuffer,
-                                        audioOutput, numberOfSamples);
-        } else {
-            SuperpoweredFloatToShortInt(sSongPlayer->playing ?
-                                        sFinalBuffer : sFirstBuffer,
-                                        audioOutput, numberOfSamples);
-        }
+        SuperpoweredFloatToShortInt(sSongPlayer->playing ?
+                                    sFinalBuffer : sFirstBuffer,
+                                    audioOutput, numberOfSamples);
         return true;
     } else {
         return false;

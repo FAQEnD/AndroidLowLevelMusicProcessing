@@ -2,6 +2,7 @@ package com.superpowered.frequencydomain;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,11 +17,18 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 
 public class MainActivity extends Activity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private static final int UI_UPDATER_DELAY = 50;
+    private static final String SONG_NAME = "i_want_to_break_free.mp3";
 
     private Button mStartRecordButton;
     private Button mPlaySongButton;
@@ -61,11 +69,16 @@ public class MainActivity extends Activity {
         if (samplerateString == null) samplerateString = "44100";
         if (buffersizeString == null) buffersizeString = "512";
 
-        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getAbsolutePath();
-        Log.d(TAG, path);
+        String musicFolderPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getAbsolutePath();
+
+        AssetManager assetManager = getResources().getAssets();
+        copyFromAssetsToMusicFolder(assetManager, SONG_NAME, musicFolderPath);
+        Log.d(TAG, musicFolderPath);
         System.loadLibrary("FrequencyDomain");
 
-        Init(Integer.parseInt(samplerateString), Integer.parseInt(buffersizeString), path, mIsDefaultFlowOn);
+        Init(Integer.parseInt(samplerateString),
+                Integer.parseInt(buffersizeString),
+                musicFolderPath, mIsDefaultFlowOn);
     }
 
     private void initUI() {
@@ -151,13 +164,48 @@ public class MainActivity extends Activity {
         mStartRecordButton.setText(isRecording ? R.string.stop_record : R.string.start_record);
     }
 
+    private void copyFromAssetsToMusicFolder(AssetManager assetManager, String fileName, String musicFolderPath) {
+        String newFileName = musicFolderPath + "/" + fileName;
+        Log.d(TAG, "new file name: " + newFileName);
+        InputStream in;
+        OutputStream out;
+        try {
+            in = assetManager.open(fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        try {
+            out = new FileOutputStream(newFileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return;
+        }
+        byte[] buf = new byte[1024];
+        int len;
+        try {
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            Log.d(TAG, "Copy completed");
+            in.close();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Cleanup();
     }
 
-    private native void Init(long samplerate, long buffersize, String path, boolean isDefaultFlowOn);
+    private native void Init(long samplerate,
+                             long buffersize,
+                             String path,
+                             boolean isDefaultFlowOn);
 
     private native void StartRecord();
 

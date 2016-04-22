@@ -26,7 +26,8 @@ $(SUPERPOWERED_PATH)/SuperpoweredAndroidAudioIO.cpp  \
 LowLevelMusicProcessor.cpp Utils.cpp JNIInterface.cpp FXManager.cpp
 LOCAL_C_INCLUDES += $(SUPERPOWERED_PATH)
 
-LOCAL_LDLIBS := -llog -landroid -lOpenSLES 
+LOCAL_LDLIBS := -llog -landroid -lOpenSLES
 LOCAL_STATIC_LIBRARIES := Superpowered
+LOCAL_SHARED_LIBRARIES += libandroid
 LOCAL_CFLAGS = -O3 -std=c++11
 include $(BUILD_SHARED_LIBRARY)

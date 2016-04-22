@@ -2,6 +2,10 @@
 // Created by antonsmusiienko on 13.04.16.
 //
 #include "JNIInterface.h"
+#include <jni.h>
+#include <android/log.h>
+#include <android/asset_manager.h>
+#include <android/asset_manager_jni.h>
 /**
  * Initialization of JNI environment interface
  */
